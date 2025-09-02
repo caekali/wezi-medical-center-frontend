@@ -1,15 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
     const user = ref(null)
-    const token = ref(localStorage.getItem('auth_token'))
-
-    const isAuthenticated = computed(() => !!token.value && !!user.value)
+    const token = ref(localStorage.getItem('token'))
 
     const login = async (credentials) => {
         try {
-            const response = await fetch('/api/login', {
+            const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -17,56 +15,51 @@ export const useAuthStore = defineStore('auth', () => {
                 body: JSON.stringify(credentials)
             })
 
+            const data = await response.json()
+
             if (response.ok) {
-                const data = await response.json()
-                token.value = data.token
                 user.value = data.user
-                localStorage.setItem('auth_token', data.token)
-                return true
+                token.value = data.token
+                localStorage.setItem('token', data.token)
+                localStorage.setItem('user', JSON.stringify(data.user))
+                return { success: true, user: data.user }
+            } else {
+                return { success: false, message: data.message }
             }
-            return false
         } catch (error) {
-            console.error('Login error:', error)
-            return false
+            return { success: false, message: 'Login failed. Please try again.' }
         }
     }
 
     const logout = () => {
         user.value = null
         token.value = null
-        localStorage.removeItem('auth_token')
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
     }
 
-    const fetchUser = async () => {
-        if (!token.value) return false
-
-        try {
-            const response = await fetch('/api/user', {
-                headers: {
-                    'Authorization': `Bearer ${token.value}`,
-                    'Content-Type': 'application/json',
-                }
-            })
-
-            if (response.ok) {
-                user.value = await response.json()
-                return true
-            } else {
-                logout()
-                return false
-            }
-        } catch (error) {
-            logout()
-            return false
+    const initializeAuth = () => {
+        const savedUser = localStorage.getItem('user')
+        if (savedUser && token.value) {
+            user.value = JSON.parse(savedUser)
         }
+    }
+
+    const isDoctor = () => {
+        return user.value?.role === 'doctor'
+    }
+
+    const isAdmin = () => {
+        return user.value?.role === 'admin'
     }
 
     return {
         user,
         token,
-        isAuthenticated,
         login,
         logout,
-        fetchUser
+        initializeAuth,
+        isDoctor,
+        isAdmin
     }
 })
