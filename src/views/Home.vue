@@ -185,12 +185,15 @@ onMounted(() => {
           </p>
 
           <div class="flex flex-col md:flex-row items-center mt-8 gap-4">
-            <router-link to="book-appointment" class="bg-indigo-950 text-white px-8 pr-3 py-3 rounded-full text-sm font-medium flex items-center space-x-3 hover:bg-indigo-700 transition shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
-               aria-label="Book a medical appointment"
+            <router-link
+                to="/book-appointment"
+                class="z-50 bg-indigo-950 text-white px-8 pr-3 py-3 rounded-full text-sm font-medium flex items-center space-x-3 hover:bg-indigo-700 transition shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
+                aria-label="Book a medical appointment"
+                role="button"
             >
               Book Appointment
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4.821 11.999h13.43m0 0-6.714-6.715m6.715 6.715-6.715 6.715" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4.017 9.999h11.191m0 0-5.595-5.596m5.595 5.596-5.595 5.596" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </router-link>
           </div>
@@ -198,7 +201,7 @@ onMounted(() => {
       </main>
 
       <!-- Slideshow Controls -->
-      <div class="flex items-center justify-center pb-8 space-x-6">
+      <div class="z-50 flex items-center justify-center pb-8 space-x-6">
         <!-- Play/Pause Button -->
         <button @click="togglePlayPause"
                 class="text-white hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-white rounded p-1"
@@ -212,7 +215,7 @@ onMounted(() => {
         </button>
 
         <!-- Dot Indicators -->
-        <div class="flex items-center space-x-3" role="tablist" aria-label="Slideshow navigation">
+        <div class="z-50 flex items-center space-x-3" role="tablist" aria-label="Slideshow navigation">
           <button v-for="(slide, index) in 5" :key="index"
                   :data-slide-btn="index"
                   class="w-3 h-3 bg-white/50 rounded-full transition focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"

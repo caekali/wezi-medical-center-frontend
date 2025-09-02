@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import Layout from '../components/Layout.vue'
 import BaseInput from '../components/BaseInput.vue'
 import BaseSelect from '../components/BaseSelect.vue'
+import Navigation from "@/components/Navigation.vue";
 
 const router = useRouter()
 
@@ -170,6 +171,7 @@ const submitAppointment = async () => {
 </script>
 
 <template>
+  <Navigation/>
   <Layout>
     <div class="min-h-screen bg-gray-50 py-12">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
