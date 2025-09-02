@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Departments from '../views/Departments.vue'
-import Login from '../views/Login.vue'
+import Login from '../views/auth/Login.vue'
 import BookAppointment from '@/views/BookAppointment.vue'
+import ForgotPassword from '@/views/auth/ForgotPassword.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/book-appointment',
     name: 'book-appointment',
     component: BookAppointment
+  },
+   {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: ForgotPassword
   }
 ]
 
