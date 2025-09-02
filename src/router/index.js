@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Departments from '../views/Departments.vue'
-import Login from '../views/Login.vue'
+import Login from '../views/auth/Login.vue'
 import BookAppointment from '@/views/BookAppointment.vue'
+import Dashboard from "@/views/Dashboard.vue";
+import DashboardAppointments from "@/views/DashboardAppointments.vue";
+import DashboardStaff from "@/views/DashboardStaff.vue";
+import DashboardPatients from "@/views/DashboardPatients.vue";
+import DashboardSettings from "@/views/DashboardSettings.vue";
 
 const routes = [
   {
@@ -24,6 +29,31 @@ const routes = [
     path: '/book-appointment',
     name: 'book-appointment',
     component: BookAppointment
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard
+  },
+  {
+    path: '/dashboard/appointments',
+    name: 'dashboard-appointments',
+    component: DashboardAppointments
+  },
+  {
+    path: '/dashboard/patients',
+    name: 'dashboard-patients',
+    component: DashboardPatients
+  },
+  {
+    path: '/dashboard/staff',
+    name: 'dashboard-staff',
+    component: DashboardStaff
+  },
+  {
+    path: '/dashboard/settings',
+    name: 'dashboard-settings',
+    component: DashboardSettings
   }
 ]
 

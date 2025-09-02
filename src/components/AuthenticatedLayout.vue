@@ -173,7 +173,7 @@ const navigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
   { name: 'Appointments', href: '/dashboard/appointments', icon: AppointmentsIcon },
   { name: 'Staff', href: '/dashboard/staff', icon: StaffIcon },
-  { name: 'Patients', href: '/dashboard/patients', icon: PatientsIcon },
+  // { name: 'Patients', href: '/dashboard/patients', icon: PatientsIcon },
   { name: 'Settings', href: '/dashboard/settings', icon: SettingsIcon },
 ]
 
