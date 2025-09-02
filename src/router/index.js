@@ -8,6 +8,7 @@ import DashboardAppointments from "@/views/DashboardAppointments.vue";
 import DashboardStaff from "@/views/DashboardStaff.vue";
 import DashboardPatients from "@/views/DashboardPatients.vue";
 import DashboardSettings from "@/views/DashboardSettings.vue";
+import DashboardDepartments from "@/views/DashboardDepartments.vue";
 import DoctorDashboard from "@/views/Doctor/Dashboard.vue";
 import DoctorAppointments from "@/views/Doctor/Appointments.vue";
 import DoctorSchedule from "@/views/Doctor/Schedule.vue";
@@ -43,6 +44,12 @@ const routes = [
     path: '/dashboard/appointments',
     name: 'dashboard-appointments',
     component: DashboardAppointments,
+    // meta: { requiresAuth: true, role: 'admin' }
+  },
+  {
+    path: '/dashboard/departments',
+    name: 'dashboard-departments',
+    component: DashboardDepartments,
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
