@@ -14,6 +14,7 @@ import DoctorAppointments from "@/views/doctor/Appointments.vue";
 import DoctorSchedule from "@/views/doctor/Schedule.vue";
 import DashboardServices from '@/views/admin/DashboardServices.vue'
 import { useAuthStore } from '@/stores/auth'
+import HelpDeskProfile from '@/views/helpdesk/Profile.vue'
 
 const routes = [
   {
@@ -27,7 +28,7 @@ const routes = [
     component: AdminDepartments
   },
   {
-   path: '/dashboard/services',
+    path: '/dashboard/services',
     name: 'dashboard-services',
     component: DashboardServices
   },
@@ -45,57 +46,74 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/appointments',
     name: 'dashboard-appointments',
     component: Appointments,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'help desk' }
   },
   {
     path: '/dashboard/departments',
     name: 'dashboard-departments',
     component: AdminDepartments,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/patients',
     name: 'dashboard-patients',
     component: DashboardPatients,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/staff',
     name: 'dashboard-staff',
     component: Staff,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/settings',
     name: 'dashboard-settings',
     component: DashboardSettings,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
+
   // Doctor routes
   {
     path: '/doctor/dashboard',
     name: 'doctor-dashboard',
     component: DoctorDashboard,
-    // meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'doctor' }
   },
   {
     path: '/doctor/appointments',
     name: 'doctor-appointments',
     component: DoctorAppointments,
-    // meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'doctor' }
   },
   {
     path: '/doctor/schedule',
     name: 'doctor-schedule',
     component: DoctorSchedule,
-    // meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'doctor' }
   }
+  , {
+    path: '/helpdesk/profile',
+    name: 'helpdesk-profile',
+    component: HelpDeskProfile,
+    meta: { requiresAuth: true, role: 'doctor' }
+  }
+
+   , {
+    path: '/helpdesk/dashboard',
+    name: 'helpdesk-dashboard',
+    component: ,
+    meta: { requiresAuth: true, role: 'doctor' }
+  }
+
+
+  
 ]
 
 const router = createRouter({
