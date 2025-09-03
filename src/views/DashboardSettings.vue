@@ -13,17 +13,12 @@
         <!-- Tab Navigation -->
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-            <button
-                v-for="tab in tabs"
-                :key="tab.id"
-                @click="activeTab = tab.id"
-                :class="[
-                'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
-                activeTab === tab.id
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              ]"
-            >
+            <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
+              'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm',
+              activeTab === tab.id
+                ? 'border-indigo-500 text-indigo-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            ]">
               {{ tab.name }}
             </button>
           </nav>
@@ -39,37 +34,26 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Hospital Name</label>
-                  <input
-                      v-model="generalSettings.hospital_name"
-                      type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <input v-model="generalSettings.hospital_name" type="text"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Contact Email</label>
-                  <input
-                      v-model="generalSettings.contact_email"
-                      type="email"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <input v-model="generalSettings.contact_email" type="email"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                  <input
-                      v-model="generalSettings.phone_number"
-                      type="tel"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <input v-model="generalSettings.phone_number" type="tel"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Time Zone</label>
-                  <select
-                      v-model="generalSettings.timezone"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
+                  <select v-model="generalSettings.timezone"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="UTC">UTC</option>
                     <option value="America/New_York">Eastern Time</option>
                     <option value="America/Chicago">Central Time</option>
@@ -81,19 +65,13 @@
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                <textarea
-                    v-model="generalSettings.address"
-                    rows="3"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                ></textarea>
+                <textarea v-model="generalSettings.address" rows="3"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
               </div>
 
               <div class="flex justify-end">
-                <button
-                    type="submit"
-                    :disabled="saving"
-                    class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                >
+                <button type="submit" :disabled="saving"
+                  class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
                   {{ saving ? 'Saving...' : 'Save Changes' }}
                 </button>
               </div>
@@ -108,10 +86,8 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Appointment Duration (minutes)</label>
-                  <select
-                      v-model="appointmentSettings.default_duration"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
+                  <select v-model="appointmentSettings.default_duration"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="15">15 minutes</option>
                     <option value="30">30 minutes</option>
                     <option value="45">45 minutes</option>
@@ -120,32 +96,21 @@
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Maximum Advance Booking (days)</label>
-                  <input
-                      v-model.number="appointmentSettings.max_advance_booking"
-                      type="number"
-                      min="1"
-                      max="365"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <input v-model.number="appointmentSettings.max_advance_booking" type="number" min="1" max="365"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Working Hours Start</label>
-                  <input
-                      v-model="appointmentSettings.working_hours_start"
-                      type="time"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <input v-model="appointmentSettings.working_hours_start" type="time"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Working Hours End</label>
-                  <input
-                      v-model="appointmentSettings.working_hours_end"
-                      type="time"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                  <input v-model="appointmentSettings.working_hours_end" type="time"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
                 </div>
               </div>
 
@@ -153,12 +118,8 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Working Days</label>
                 <div class="space-y-2">
                   <label v-for="day in weekDays" :key="day.value" class="flex items-center">
-                    <input
-                        v-model="appointmentSettings.working_days"
-                        :value="day.value"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
+                    <input v-model="appointmentSettings.working_days" :value="day.value" type="checkbox"
+                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                     <span class="ml-2 text-sm text-gray-700">{{ day.label }}</span>
                   </label>
                 </div>
@@ -166,37 +127,25 @@
 
               <div class="space-y-4">
                 <div class="flex items-center">
-                  <input
-                      v-model="appointmentSettings.allow_online_booking"
-                      type="checkbox"
-                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
+                  <input v-model="appointmentSettings.allow_online_booking" type="checkbox"
+                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                   <label class="ml-2 text-sm text-gray-700">Allow online appointment booking</label>
                 </div>
                 <div class="flex items-center">
-                  <input
-                      v-model="appointmentSettings.require_confirmation"
-                      type="checkbox"
-                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
+                  <input v-model="appointmentSettings.require_confirmation" type="checkbox"
+                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                   <label class="ml-2 text-sm text-gray-700">Require confirmation for new appointments</label>
                 </div>
                 <div class="flex items-center">
-                  <input
-                      v-model="appointmentSettings.send_reminders"
-                      type="checkbox"
-                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  />
+                  <input v-model="appointmentSettings.send_reminders" type="checkbox"
+                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                   <label class="ml-2 text-sm text-gray-700">Send appointment reminders</label>
                 </div>
               </div>
 
               <div class="flex justify-end">
-                <button
-                    type="submit"
-                    :disabled="saving"
-                    class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                >
+                <button type="submit" :disabled="saving"
+                  class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
                   {{ saving ? 'Saving...' : 'Save Changes' }}
                 </button>
               </div>
@@ -207,10 +156,8 @@
           <div v-show="activeTab === 'services'" class="space-y-6">
             <div class="flex justify-between items-center">
               <h3 class="text-lg font-medium text-gray-900">Services</h3>
-              <button
-                  @click="showServiceModal = true"
-                  class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
+              <button @click="showServiceModal = true"
+                class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Add Service
               </button>
             </div>
@@ -218,48 +165,47 @@
             <div class="bg-gray-50 rounded-lg overflow-hidden">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
-                <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service Name</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service
+                      Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
+                    </th>
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                    </th>
+                  </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="service in services" :key="service.id">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {{ service.name }}
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ service.duration }} min
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${{ service.price }}
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <tr v-for="service in services" :key="service.id">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {{ service.name }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {{ service.duration }} min
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      ${{ service.price }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
                       <span :class="[
                         'px-2 py-1 text-xs font-medium rounded-full',
                         service.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                       ]">
                         {{ service.active ? 'Active' : 'Inactive' }}
                       </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button
-                        @click="editService(service)"
-                        class="text-indigo-600 hover:text-indigo-900 mr-4"
-                    >
-                      Edit
-                    </button>
-                    <button
-                        @click="deleteService(service)"
-                        class="text-red-600 hover:text-red-900"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button @click="editService(service)" class="text-indigo-600 hover:text-indigo-900 mr-4">
+                        Edit
+                      </button>
+                      <button @click="deleteService(service)" class="text-red-600 hover:text-red-900">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -274,27 +220,18 @@
                 <h4 class="text-md font-medium text-gray-900">Email Notifications</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input
-                        v-model="notificationSettings.email_new_appointment"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
+                    <input v-model="notificationSettings.email_new_appointment" type="checkbox"
+                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                     <span class="ml-2 text-sm text-gray-700">New appointment notifications</span>
                   </label>
                   <label class="flex items-center">
-                    <input
-                        v-model="notificationSettings.email_appointment_reminders"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
+                    <input v-model="notificationSettings.email_appointment_reminders" type="checkbox"
+                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                     <span class="ml-2 text-sm text-gray-700">Appointment reminder emails</span>
                   </label>
                   <label class="flex items-center">
-                    <input
-                        v-model="notificationSettings.email_cancellations"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
+                    <input v-model="notificationSettings.email_cancellations" type="checkbox"
+                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                     <span class="ml-2 text-sm text-gray-700">Appointment cancellation notifications</span>
                   </label>
                 </div>
@@ -304,124 +241,25 @@
                 <h4 class="text-md font-medium text-gray-900">SMS Notifications</h4>
                 <div class="space-y-2">
                   <label class="flex items-center">
-                    <input
-                        v-model="notificationSettings.sms_appointment_reminders"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
+                    <input v-model="notificationSettings.sms_appointment_reminders" type="checkbox"
+                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                     <span class="ml-2 text-sm text-gray-700">SMS appointment reminders</span>
                   </label>
                   <label class="flex items-center">
-                    <input
-                        v-model="notificationSettings.sms_confirmations"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
+                    <input v-model="notificationSettings.sms_confirmations" type="checkbox"
+                      class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
                     <span class="ml-2 text-sm text-gray-700">SMS appointment confirmations</span>
                   </label>
                 </div>
               </div>
 
               <div class="flex justify-end">
-                <button
-                    type="submit"
-                    :disabled="saving"
-                    class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                >
+                <button type="submit" :disabled="saving"
+                  class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
                   {{ saving ? 'Saving...' : 'Save Changes' }}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Service Modal -->
-    <div v-if="showServiceModal" class="fixed inset-0 z-50 overflow-y-auto">
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="closeServiceModal"></div>
-
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-              <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
-                  {{ editingService ? 'Edit Service' : 'Add New Service' }}
-                </h3>
-
-                <form @submit.prevent="saveService" class="space-y-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
-                    <input
-                        v-model="serviceForm.name"
-                        type="text"
-                        required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div class="grid grid-cols-2 gap-4">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes)</label>
-                      <input
-                          v-model.number="serviceForm.duration"
-                          type="number"
-                          min="1"
-                          required
-                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
-                      <input
-                          v-model.number="serviceForm.price"
-                          type="number"
-                          min="0"
-                          step="0.01"
-                          required
-                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea
-                        v-model="serviceForm.description"
-                        rows="3"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    ></textarea>
-                  </div>
-
-                  <div class="flex items-center">
-                    <input
-                        v-model="serviceForm.active"
-                        type="checkbox"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
-                    <label class="ml-2 text-sm text-gray-700">Active</label>
-                  </div>
-
-                  <div class="flex justify-end space-x-3 pt-4">
-                    <button
-                        type="button"
-                        @click="closeServiceModal"
-                        class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                        type="submit"
-                        :disabled="saving"
-                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                    >
-                      {{ saving ? 'Saving...' : 'Save Service' }}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -446,7 +284,6 @@ const editingService = ref(null)
 const tabs = [
   { id: 'general', name: 'General' },
   { id: 'appointments', name: 'Appointments' },
-  { id: 'services', name: 'Services' },
   { id: 'notifications', name: 'Notifications' }
 ]
 

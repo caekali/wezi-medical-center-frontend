@@ -7,6 +7,9 @@ import dentalImage from '@/assets/images/Departments/dental.jpg'
 import antenatalImage from '@/assets/images/Departments/antenatal.jpg'
 import generalImage from '@/assets/images/Departments/general.jpg'
 
+
+
+
 const departments = ref([
   {
     id: 'general',

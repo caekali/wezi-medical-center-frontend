@@ -12,6 +12,7 @@ import DashboardDepartments from "@/views/DashboardDepartments.vue";
 import DoctorDashboard from "@/views/Doctor/Dashboard.vue";
 import DoctorAppointments from "@/views/Doctor/Appointments.vue";
 import DoctorSchedule from "@/views/Doctor/Schedule.vue";
+import DashboardServices from '@/views/DashboardServices.vue'
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: '/departments',
     name: 'departments',
     component: Departments
+  },
+  {
+   path: '/dashboard/services',
+    name: 'dashboard-services',
+    component: DashboardServices
   },
   {
     path: '/login',

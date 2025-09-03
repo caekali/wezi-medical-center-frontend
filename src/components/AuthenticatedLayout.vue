@@ -10,17 +10,12 @@
 
       <!-- Navigation -->
       <nav class="flex-1 px-4 py-6 space-y-2">
-        <router-link
-            v-for="item in navigationItems"
-            :key="item.name"
-            :to="item.href"
-            :class="[
-            'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
-            $route.path === item.href
-              ? 'bg-indigo-100 text-indigo-700'
-              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-          ]"
-        >
+        <router-link v-for="item in navigationItems" :key="item.name" :to="item.href" :class="[
+          'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+          $route.path === item.href
+            ? 'bg-indigo-100 text-indigo-700'
+            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+        ]">
           <component :is="item.icon" class="w-5 h-5 mr-3" />
           {{ item.name }}
         </router-link>
@@ -41,31 +36,23 @@
             <p class="text-xs text-gray-500">{{ user?.email }}</p>
           </div>
         </div>
-        <button
-            @click="handleLogout"
-            class="w-full mt-3 px-3 py-2 text-sm text-left text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
-        >
+        <button @click="handleLogout"
+          class="w-full mt-3 px-3 py-2 text-sm text-left text-gray-600 hover:bg-gray-50 rounded-md transition-colors">
           Sign out
         </button>
       </div>
     </aside>
 
     <!-- Mobile sidebar backdrop -->
-    <div
-        v-if="sidebarOpen"
-        class="fixed inset-0 z-40 md:hidden"
-        @click="sidebarOpen = false"
-    >
+    <div v-if="sidebarOpen" class="fixed inset-0 z-40 md:hidden" @click="sidebarOpen = false">
       <div class="absolute inset-0 bg-black opacity-50"></div>
     </div>
 
     <!-- Mobile sidebar -->
-    <aside
-        :class="[
-        'fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out md:hidden',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      ]"
-    >
+    <aside :class="[
+      'fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out md:hidden',
+      sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+    ]">
       <!-- Mobile navigation content (same as desktop) -->
       <div class="flex items-center justify-between h-16 px-4 border-b">
         <h1 class="text-xl font-semibold text-gray-800">Dashboard</h1>
@@ -77,18 +64,13 @@
       </div>
 
       <nav class="flex-1 px-4 py-6 space-y-2">
-        <router-link
-            v-for="item in navigationItems"
-            :key="item.name"
-            :to="item.href"
-            @click="sidebarOpen = false"
-            :class="[
+        <router-link v-for="item in navigationItems" :key="item.name" :to="item.href" @click="sidebarOpen = false"
+          :class="[
             'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
             $route.path === item.href
               ? 'bg-indigo-100 text-indigo-700'
               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-          ]"
-        >
+          ]">
           <component :is="item.icon" class="w-5 h-5 mr-3" />
           {{ item.name }}
         </router-link>
@@ -101,10 +83,7 @@
       <header class="bg-white shadow-sm border-b">
         <div class="flex items-center justify-between px-4 py-4">
           <div class="flex items-center">
-            <button
-                @click="sidebarOpen = true"
-                class="text-gray-500 hover:text-gray-700 md:hidden"
-            >
+            <button @click="sidebarOpen = true" class="text-gray-500 hover:text-gray-700 md:hidden">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -116,7 +95,8 @@
             <!-- Notifications -->
             <button class="text-gray-500 hover:text-gray-700">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5-5h-5l-5 5h5l-5 5h5l5-5z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15 17h5l-5-5h-5l-5 5h5l-5 5h5l5-5z" />
               </svg>
             </button>
           </div>
@@ -174,6 +154,7 @@ const navigationItems = [
   { name: 'Appointments', href: '/dashboard/appointments', icon: AppointmentsIcon },
   { name: 'Staff', href: '/dashboard/staff', icon: StaffIcon },
   { name: 'Departments', href: '/dashboard/departments', icon: DepartmentsIcon },
+  { name: 'Services', href: '/dashboard/services', icon: DepartmentsIcon },
   { name: 'Settings', href: '/dashboard/settings', icon: SettingsIcon },
 ]
 

@@ -55,7 +55,7 @@ export const updateDepartment = async (id, department) => {
 }
 
 // Delete a department
-export const deleteDepartment = async (id) => {
+export const deleteDepartmentById = async (id) => {
   try {
     await api.delete(`/departments/${id}`)
     return { success: true }
