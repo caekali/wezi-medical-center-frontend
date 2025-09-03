@@ -6,6 +6,7 @@ import pediatricsImage from '@/assets/images/Departments/pediatrics.jpg'
 import dentalImage from '@/assets/images/Departments/dental.jpg'
 import antenatalImage from '@/assets/images/Departments/antenatal.jpg'
 import generalImage from '@/assets/images/Departments/general.jpg'
+import heroImage from '@/assets/images/services.jpg'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -63,20 +64,26 @@ const departments = computed(() => [
 </script>
 
 <template>
+  <!-- Hero Section with Background Image -->
+  <div class="relative bg-cover bg-top bg-no-repeat h-96" :style="`background-image: url(${heroImage});`">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+    <!-- Navigation within hero section -->
+    <div class="relative z-10">
+      <Navigation :transparent="true" />
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 flex items-center justify-center h-full">
+      <div class="max-w-7xl mx-auto px-4 text-center text-white">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">{{ t('departments.title') }}</h1>
+        <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">{{ t('departments.subtitle') }}</p>
+      </div>
+    </div>
+  </div>
+
   <Layout>
-    <Navigation />
-    <div class="min-h-screen bg-gray-50">
-      <!-- Header Section -->
-      <section class="bg-white py-16 lg:py-24">
-        <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-24 text-center">
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            <span class="text-indigo-600">{{ t('departments.title') }}</span>
-          </h1>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            {{ t('departments.subtitle') }}
-          </p>
-        </div>
-      </section>
 
       <!-- Departments Grid -->
       <section class="py-16 lg:py-24">
@@ -141,6 +148,5 @@ const departments = computed(() => [
           </div>
         </div>
       </section>
-    </div>
   </Layout>
 </template>

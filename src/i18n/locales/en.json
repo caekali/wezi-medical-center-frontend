@@ -3,7 +3,9 @@
     "home": "Home",
     "departments": "Services",
     "appointments": "Appointments",
-    "navigationMap": "Navigation Map",
+    "bookAppointment": "Book Appointment",
+    "bookAmbulance": "Book Ambulance",
+    "map": "Find Us",
     "about": "About Us",
     "login": "Login",
     "language": "Language"
@@ -133,6 +135,150 @@
         "registerWalkIn": "Register Walk-in",
         "manageAppointments": "Manage Appointments"
       }
+    }
+  },
+
+  "about": {
+    "title": "About Wezi Medical Center",
+    "subtitle": "Providing exceptional healthcare services to our community since 2010",
+    "mission": {
+      "title": "Our Mission",
+      "content": "To provide accessible, high-quality healthcare services to our community while maintaining the highest standards of medical excellence and patient care."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "content": "To be the leading healthcare provider in the region, known for our compassionate care, innovative treatments, and commitment to improving the health and well-being of every patient we serve."
+    },
+    "values": {
+      "title": "Our Values",
+      "compassion": {
+        "title": "Compassion",
+        "content": "We treat every patient with empathy, dignity, and respect."
+      },
+      "excellence": {
+        "title": "Excellence",
+        "content": "We strive for the highest standards in medical care and service delivery."
+      },
+      "integrity": {
+        "title": "Integrity",
+        "content": "We conduct ourselves with honesty, transparency, and ethical behavior."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "content": "We embrace new technologies and methods to improve patient outcomes."
+      }
+    },
+    "team": {
+      "title": "Meet Our Team",
+      "subtitle": "Our dedicated healthcare professionals are here to serve you",
+      "doctors": {
+        "sarah": {
+          "name": "Dr. Sarah Johnson",
+          "position": "Chief Medical Officer",
+          "specialization": "General Medicine",
+          "experience": "15+ years of experience",
+          "description": "Passionate about preventive care and patient education."
+        },
+        "michael": {
+          "name": "Dr. Michael Chen",
+          "position": "Lead Dental Surgeon",
+          "specialization": "Oral & Maxillofacial Surgery",
+          "experience": "12+ years of experience",
+          "description": "Specializes in complex dental procedures and oral rehabilitation."
+        },
+        "emily": {
+          "name": "Dr. Emily Rodriguez",
+          "position": "Senior Radiologist",
+          "specialization": "Diagnostic Imaging",
+          "experience": "10+ years of experience",
+          "description": "Expert in advanced imaging techniques and diagnostic accuracy."
+        }
+      }
+    },
+    "stats": {
+      "patients": "10,000+",
+      "patientsLabel": "Happy Patients",
+      "staff": "50+",
+      "staffLabel": "Medical Staff",
+      "years": "13+",
+      "yearsLabel": "Years of Service",
+      "services": "25+",
+      "servicesLabel": "Medical Services"
+    },
+    "contact": {
+      "title": "Visit Us Today",
+      "subtitle": "Ready to experience quality healthcare?",
+      "cta": "Book an Appointment"
+    }
+  },
+  "map": {
+    "title": "Find Us",
+    "subtitle": "Get directions to Wezi Medical Center in Mzuzu",
+    "locationInfo": "Location Information",
+    "address": "Address",
+    "phone": "Phone Number",
+    "hours": "Operating Hours",
+    "weekdays": "Monday - Friday",
+    "weekends": "Saturday - Sunday",
+    "emergency": "Emergency Services",
+    "directions": "Get Directions",
+    "gettingLocation": "Getting your location...",
+    "locationFound": "Location found successfully",
+    "openGoogleMaps": "Open in Google Maps",
+    "openAppleMaps": "Open in Apple Maps",
+    "openWaze": "Open in Waze",
+    "refreshLocation": "Refresh My Location",
+    "emergencyTitle": "Emergency Assistance",
+    "emergencyText": "For medical emergencies, call us immediately or visit our emergency department",
+    "callEmergency": "Call Emergency",
+    "bookAppointment": "Book Appointment",
+    "errors": {
+      "noGeolocation": "Geolocation is not supported by this browser",
+      "locationFailed": "Unable to get your location. Please try again.",
+      "permissionDenied": "Location access denied. Please enable location services.",
+      "positionUnavailable": "Location information is unavailable.",
+      "timeout": "Location request timed out. Please try again."
+    }
+  },
+  "ambulance": {
+    "title": "Book Ambulance",
+    "subtitle": "Request emergency ambulance service quickly and safely",
+    "emergency": "For critical emergencies:",
+    "patientInfo": "Patient Information",
+    "locationInfo": "Location Information",
+    "medicalInfo": "Medical Information",
+    "patientName": "Patient Name",
+    "phoneNumber": "Phone Number",
+    "emergencyContact": "Emergency Contact",
+    "pickupAddress": "Pickup Address",
+    "destination": "Destination",
+    "urgencyLevel": "Urgency Level",
+    "medicalCondition": "Medical Condition",
+    "specialRequirements": "Special Requirements",
+    "cancel": "Cancel",
+    "requesting": "Requesting...",
+    "requestAmbulance": "Request Ambulance",
+    "helpText": "For emergency ambulance service call +265 996 817 322",
+    "urgency": {
+      "critical": "Critical",
+      "urgent": "Urgent",
+      "routine": "Routine"
+    },
+    "destinations": {
+      "wezi": "Wezi Medical Center",
+      "hospital": "Hospital",
+      "clinic": "Clinic",
+      "other": "Other"
+    },
+    "placeholders": {
+      "patientName": "Enter patient's full name",
+      "phoneNumber": "Your phone number",
+      "emergencyContact": "Emergency contact number",
+      "pickupAddress": "Current location/address",
+      "destination": "Select destination",
+      "urgencyLevel": "Select urgency level",
+      "medicalCondition": "Describe medical condition",
+      "specialRequirements": "Any special requirements"
     }
   }
 }

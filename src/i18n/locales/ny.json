@@ -4,7 +4,9 @@
     "home": "Kunyumba",
     "departments": "Masevisi",
     "appointments": "Nthawi za Kudziwa",
-    "navigationMap": "Mapu ya Njira",
+    "bookAppointment": "Lembani Nthawi",
+    "bookAmbulance": "Lembani Ambulansi",
+    "map": "Mapu",
     "login": "Kulowa",
     "language": "Chilankhulo"
   },
@@ -133,6 +135,74 @@
         "registerWalkIn": "Lembetsani Wobwera Mosalembetsa",
         "manageAppointments": "Yambirani Nthawi"
       }
+    }
+  },
+
+  "map": {
+    "title": "Mutipeze",
+    "subtitle": "Pezani njira yopita ku Wezi Medical Center ku Mzuzu",
+    "locationInfo": "Zambiri za Malo",
+    "address": "Adiresi",
+    "phone": "Nambala ya Foni",
+    "hours": "Nthawi Yogwira Ntchito",
+    "weekdays": "Lolemba - Lachisanu",
+    "weekends": "Loweruka - Lamulungu",
+    "emergency": "Chithandizo Chadzidzidzi",
+    "directions": "Peza Njira",
+    "gettingLocation": "Tikupeza malo anu...",
+    "locationFound": "Malo apezeka bwino",
+    "openGoogleMaps": "Tsegula mu Google Maps",
+    "openAppleMaps": "Tsegula mu Apple Maps",
+    "openWaze": "Tsegula mu Waze",
+    "refreshLocation": "Konzanso Malo Anga",
+    "emergencyTitle": "Chithandizo Chadzidzidzi",
+    "emergencyText": "Pa zovuta za mankhwala, titimbeni mwachangu kapena bwerani ku gawo lathu la zidzidzidzi",
+    "callEmergency": "Imbani Dzidzidzi",
+    "bookAppointment": "Pangani Mgwirizano",
+    "errors": {
+      "noGeolocation": "Browser iyi sichigwirizana ndi kudziwa malo",
+      "locationFailed": "Sitinathe kupeza malo anu. Chonde lolirani kuti tipeze malo anu."
+    }
+  },
+  "ambulance": {
+    "title": "Lembani Ambulansi",
+    "subtitle": "Pemphan chithandizo cha ambulansi mwachangu ndi chithupi",
+    "emergency": "Kwa zovuta kwambiri:",
+    "patientInfo": "Zambiri za Wodwala",
+    "locationInfo": "Zambiri za Malo",
+    "medicalInfo": "Zambiri za Mankhwala",
+    "patientName": "Dzina la Wodwala",
+    "phoneNumber": "Nambala ya Foni",
+    "emergencyContact": "Nambala ya Zadzidzidzi",
+    "pickupAddress": "Malo Otengera",
+    "destination": "Komwe Akupita",
+    "urgencyLevel": "Mlingo wa Changu",
+    "medicalCondition": "Matenda",
+    "specialRequirements": "Zofunikira Zapadera",
+    "cancel": "Leka",
+    "requesting": "Kupempha...",
+    "requestAmbulance": "Pemphan Ambulansi",
+    "helpText": "Kwa chithandizo cha ambulansi tiyimbirani pa +265 996 817 322",
+    "urgency": {
+      "critical": "Changu Kwambiri",
+      "urgent": "Changu",
+      "routine": "Wamba"
+    },
+    "destinations": {
+      "wezi": "Wezi Medical Center",
+      "hospital": "Chipatala",
+      "clinic": "Kliniki",
+      "other": "Kwina"
+    },
+    "placeholders": {
+      "patientName": "Lembani dzina lonse la wodwala",
+      "phoneNumber": "Nambala ya foni",
+      "emergencyContact": "Nambala ya wachibale",
+      "pickupAddress": "Malo omwe muli nawo tsopano",
+      "destination": "Sankhani malo amene mukupita",
+      "urgencyLevel": "Sankhani changu cha vutoli",
+      "medicalCondition": "Fotokozani matenda",
+      "specialRequirements": "Zina zilizonse zofunikira"
     }
   }
 }

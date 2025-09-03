@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Departments from '../views/Departments.vue'
+import About from '../views/About.vue'
+import Map from '../views/Map.vue'
+import BookAmbulance from '@/views/BookAmbulance.vue'
 import Login from '../views/auth/Login.vue'
 import BookAppointment from '@/views/BookAppointment.vue'
 import Dashboard from "@/views/admin/Dashboard.vue";
@@ -117,10 +120,21 @@ const routes = [
     name: 'helpdesk-dashboard',
     component: HelpDeskDashboard,
     meta: { requiresAuth: true, role: 'doctor' }
-  }
-
-
-  
+  }, {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
+    path: '/map',
+    name: 'map',
+    component: Map
+  },
+  {
+    path: '/book-ambulance',
+    name: 'book-ambulance',
+    component: BookAmbulance
+  },
 ]
 
 const router = createRouter({
