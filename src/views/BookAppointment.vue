@@ -18,7 +18,7 @@ const appointmentForm = ref({
   department_id: '',
   service_id: '',
   appointment_date: '',
-  // appointment_time: '',
+  appointment_time: '20:30',
   doctor_id: ''
 })
 
@@ -133,9 +133,8 @@ const isFormValid = computed(() => {
     appointmentForm.value.department_id &&
     appointmentForm.value.service_id &&
     appointmentForm.value.appointment_date &&
-    // appointmentForm.value.appointment_time
-  isValidPhone.value
-  // isValidDate.value
+    appointmentForm.value.appointment_time &&
+    isValidPhone.value
 })
 
 // Get minimum date (today)
@@ -161,13 +160,24 @@ const submitAppointment = async () => {
 
   if (result.success) {
     alert('Appointment booked successfully! We will contact you to confirm.')
-    router.push('/')
+    // router.push('/')
   } else {
     if (result.errors) {
       errors.value = result.errors
     } else {
       errors.value.general = result.message
     }
+  }
+
+
+  appointmentForm.value = {
+    phone_number: '',
+    patient_name: '',
+    department_id: '',
+    service_id: '',
+    appointment_date: '',
+    appointment_time: '20:30',
+    doctor_id: ''
   }
 
   isSubmitting.value = false

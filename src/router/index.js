@@ -14,6 +14,7 @@ import DoctorAppointments from "@/views/doctor/Appointments.vue";
 import DoctorSchedule from "@/views/doctor/Schedule.vue";
 import DashboardServices from '@/views/admin/DashboardServices.vue'
 import ForgotPassword from '@/views/auth/ForgotPassword.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const routes = [
   {
@@ -57,87 +58,93 @@ const routes = [
     path: '/dashboard/appointments',
     name: 'dashboard-appointments',
     component: Appointments,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'help desk' }
   },
   {
     path: '/dashboard/departments',
     name: 'dashboard-departments',
     component: AdminDepartments,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/patients',
     name: 'dashboard-patients',
     component: DashboardPatients,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/staff',
     name: 'dashboard-staff',
     component: Staff,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/settings',
     name: 'dashboard-settings',
     component: DashboardSettings,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
-  // Doctor routes
+
+  // doctor routes
   {
     path: '/doctor/dashboard',
     name: 'doctor-dashboard',
     component: DoctorDashboard,
-    // meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'doctor' }
   },
   {
     path: '/doctor/appointments',
     name: 'doctor-appointments',
     component: DoctorAppointments,
-    // meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'doctor' }
   },
   {
     path: '/doctor/schedule',
     name: 'doctor-schedule',
     component: DoctorSchedule,
-    // meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'doctor' }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
+  routes,
 })
 
-// Navigation guard for role-based redirection
+// helper: redirect by role
+const roleRedirects = {
+  admin: '/dashboard',
+  doctor: '/doctor-dashboard',
+  staff: '/staff-dashboard',
+  patient: '/appointments',
+}
+
 router.beforeEach((to, from, next) => {
-  const user = getUserFromStorage()
+  const authStore = useAuthStore()
+
+  if (!authStore.user && !authStore.token) {
+    authStore.initializeAuth()
+  }
+
+  const user = authStore.user
 
   if (to.meta.requiresAuth && !user) {
-    next('/login')
-    return
+    return next('/login')
   }
 
-  if (user && user.role === 'doctor' && to.path.startsWith('/dashboard') && !to.path.startsWith('/doctor')) {
-    next('/doctor/dashboard')
-    return
-  }
+  if (user) {
+    const redirectPath = roleRedirects[user.role] || '/'
 
-  if (user && user.role !== 'doctor' && to.path.startsWith('/doctor')) {
-    next('/dashboard')
-    return
+    if (to.path === '/login') {
+      return next(redirectPath)
+    }
+
+    if (to.meta.roles && !to.meta.roles.includes(user.role)) {
+      return next(redirectPath)
+    }
   }
 
   next()
 })
-
-function getUserFromStorage() {
-  try {
-    const user = localStorage.getItem('user') || sessionStorage.getItem('user')
-    return user ? JSON.parse(user) : null
-  } catch {
-    return null
-  }
-}
 
 export default router

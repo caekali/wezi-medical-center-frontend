@@ -1,43 +1,63 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Layout from '../../components/Layout.vue'
-import { login } from '@/services/authService'
-const router = useRouter()
+import { useAuthStore } from '@/stores/auth'
 
-// Form data
+const router = useRouter()
+const authStore = useAuthStore()
+
+// --- Helpers ---
+const redirectByRole = (role) => {
+  const routes = {
+    admin: '/dashboard',
+    doctor: '/doctor-dashboard',
+    staff: '/staff-dashboard',
+    'help desk': '/staff-dashboard', // fixed typo
+  }
+  router.replace(routes[role] || '/')
+}
+
+// --- Auto redirect if already logged in ---
+onMounted(() => {
+  authStore.initializeAuth()
+  if (authStore.user && authStore.token) {
+    redirectByRole(authStore.user.role)
+  }
+})
+
+// --- Form data ---
 const loginForm = ref({
   email: '',
   password: '',
-  rememberMe: false
+  rememberMe: false,
 })
 
-// Form state
+// --- State ---
 const isSubmitting = ref(false)
 const showPassword = ref(false)
 const errors = ref({})
 
-// Validation
-const isValidEmail = computed(() => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(loginForm.value.email)
-})
+// --- Validation ---
+const isValidEmail = computed(() =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginForm.value.email)
+)
 
-const isFormValid = computed(() => {
-  return loginForm.value.email &&
-    loginForm.value.password &&
-    isValidEmail.value &&
-    loginForm.value.password.length >= 6
-})
+const isFormValid = computed(() =>
+  !!loginForm.value.email &&
+  !!loginForm.value.password &&
+  isValidEmail.value &&
+  loginForm.value.password.length >= 6
+)
 
-// Clear errors when user types
+// --- Clear error for a field ---
 const clearError = (field) => {
   if (errors.value[field]) {
-    delete errors.value[field]
+    errors.value = { ...errors.value, [field]: undefined }
   }
 }
 
-// Submit login
+//  Submit login
 const submitLogin = async () => {
   if (!isFormValid.value) return
 
@@ -45,52 +65,29 @@ const submitLogin = async () => {
   errors.value = {}
 
   try {
-    const { success, data, message, errors: validationErrors } = await login({
-      email: loginForm.value.email,
-      password: loginForm.value.password,
-      remember: loginForm.value.rememberMe
-    })
+    const { success, user, message, errors: validationErrors } =
+      await authStore.login({
+        email: loginForm.value.email,
+        password: loginForm.value.password,
+        remember: loginForm.value.rememberMe,
+      })
 
     if (success) {
-      // store token if needed
-      localStorage.setItem('token', data.token)
-
-      // redirect based on role
-      switch (data.role) {
-        case 'admin':
-          router.push('/dashboard')
-          break
-        case 'doctor':
-          router.push('/doctor-dashboard')
-          break
-        case 'staff':
-          router.push('/staff-dashboard')
-          break
-        case 'patient':
-          router.push('/appointments')
-          break
-        default:
-          router.push('/')
-      }
+      redirectByRole(user.role)
     } else {
-      if (validationErrors) {
-        errors.value = validationErrors
-      } else {
-        errors.value.general = message
-      }
+      errors.value = validationErrors || { general: message }
     }
   } catch (err) {
-    errors.value.general = "Something went wrong. Please try again."
+    console.error(err)
+    errors.value.general = 'Something went wrong. Please try again.'
   } finally {
     isSubmitting.value = false
   }
 }
 
-
-// Toggle password visibility
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
-}
+// Toggle password visibility ---
+const togglePasswordVisibility = () =>
+  (showPassword.value = !showPassword.value)
 </script>
 
 
