@@ -9,9 +9,11 @@ export const useAuthStore = defineStore('auth', () => {
     const isLoggedIn = computed(() => !!token.value)
     const isDoctor = computed(() => user.value?.role === 'doctor')
     const isAdmin = computed(() => user.value?.role === 'admin')
+    const isHelpDesk = computed(() => user.value?.role === 'help desk')
 
     const login = async (credentials) => {
         const { success, data, errors, message } = await loginService(credentials)
+
 
         if (success) {
             user.value = data.user
@@ -40,5 +42,5 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
-    return { user, token, isLoggedIn, login, logout, initializeAuth, isDoctor, isAdmin }
+    return { user, token, isLoggedIn, login, logout, initializeAuth, isDoctor, isAdmin ,isHelpDesk}
 })
