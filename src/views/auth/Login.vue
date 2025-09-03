@@ -2,8 +2,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Layout from '../../components/Layout.vue'
-import { login } from '@/services/authService' // ✅ import login service
-
+import { login } from '@/services/authService'
 const router = useRouter()
 
 // Form data
@@ -46,14 +45,33 @@ const submitLogin = async () => {
   errors.value = {}
 
   try {
-    const { success, data, errors: validationErrors, message } = await login({
+    const { success, data, message, errors: validationErrors } = await login({
       email: loginForm.value.email,
       password: loginForm.value.password,
-      remember: loginForm.value.rememberMe,
+      remember: loginForm.value.rememberMe
     })
 
     if (success) {
-      router.push("/dashboard")
+      // store token if needed
+      localStorage.setItem('token', data.token)
+
+      // redirect based on role
+      switch (data.role) {
+        case 'admin':
+          router.push('/dashboard')
+          break
+        case 'doctor':
+          router.push('/doctor-dashboard')
+          break
+        case 'staff':
+          router.push('/staff-dashboard')
+          break
+        case 'patient':
+          router.push('/appointments')
+          break
+        default:
+          router.push('/')
+      }
     } else {
       if (validationErrors) {
         errors.value = validationErrors
@@ -67,6 +85,7 @@ const submitLogin = async () => {
     isSubmitting.value = false
   }
 }
+
 
 // Toggle password visibility
 const togglePasswordVisibility = () => {

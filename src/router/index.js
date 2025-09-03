@@ -3,21 +3,16 @@ import Home from '../views/Home.vue'
 import Departments from '../views/Departments.vue'
 import Login from '../views/auth/Login.vue'
 import BookAppointment from '@/views/BookAppointment.vue'
-import Dashboard from "@/views/admin/Dashboard.vue"
-import Appointments from "@/views/admin/Appointments.vue"
-import Staff from "@/views/admin/Staff.vue"
-import DashboardPatients from "@/views/DashboardPatients.vue"
-import DashboardSettings from "@/views/DashboardSettings.vue"
-import AdminDepartments from "@/views/admin/AdminDepartments.vue"
-import DoctorDashboard from "@/views/doctor/Dashboard.vue"
-import DoctorAppointments from "@/views/doctor/Appointments.vue"
-import DoctorSchedule from "@/views/doctor/Schedule.vue"
+import Dashboard from "@/views/admin/Dashboard.vue";
+import Appointments from "@/views/admin/Appointments.vue";
+import Staff from "@/views/admin/Staff.vue";
+import DashboardPatients from "@/views/DashboardPatients.vue";
+import DashboardSettings from "@/views/DashboardSettings.vue";
+import AdminDepartments from "@/views/admin/AdminDepartments.vue";
+import DoctorDashboard from "@/views/doctor/Dashboard.vue";
+import DoctorAppointments from "@/views/doctor/Appointments.vue";
+import DoctorSchedule from "@/views/doctor/Schedule.vue";
 import DashboardServices from '@/views/admin/DashboardServices.vue'
-import HelpDeskDashboard from '@/views/helpdesk/Dashboard.vue'
-import HelpDeskAppointments from '@/views/helpdesk/Appointments.vue'
-import HelpDeskProfile from '@/views/helpdesk/Profile.vue'
-import AdminProfile from '@/views/admin/Profile.vue'
-import DoctorProfile from '@/views/doctor/Profile.vue'
 
 const routes = [
   {
@@ -28,7 +23,12 @@ const routes = [
   {
     path: '/departments',
     name: 'departments',
-    component: Departments
+    component: AdminDepartments
+  },
+  {
+   path: '/dashboard/services',
+    name: 'dashboard-services',
+    component: DashboardServices
   },
   {
     path: '/login',
@@ -40,11 +40,16 @@ const routes = [
     name: 'book-appointment',
     component: BookAppointment
   },
-  // Admin routes (staff, departments, services only)
   {
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
+    // meta: { requiresAuth: true, role: 'admin' }
+  },
+  {
+    path: '/dashboard/appointments',
+    name: 'dashboard-appointments',
+    component: Appointments,
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
@@ -54,9 +59,9 @@ const routes = [
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
-    path: '/dashboard/services',
-    name: 'dashboard-services',
-    component: DashboardServices,
+    path: '/dashboard/patients',
+    name: 'dashboard-patients',
+    component: DashboardPatients,
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
@@ -66,29 +71,10 @@ const routes = [
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
-    path: '/dashboard/patients',
-    name: 'dashboard-patients',
-    component: DashboardPatients,
-    // meta: { requiresAuth: true, role: 'admin' }
-  },
-  {
     path: '/dashboard/settings',
     name: 'dashboard-settings',
     component: DashboardSettings,
     // meta: { requiresAuth: true, role: 'admin' }
-  },
-  // Help Desk routes (appointments management)
-  {
-    path: '/helpdesk/dashboard',
-    name: 'helpdesk-dashboard',
-    component: HelpDeskDashboard,
-    // meta: { requiresAuth: true, role: 'helpdesk' }
-  },
-  {
-    path: '/helpdesk/appointments',
-    name: 'helpdesk-appointments',
-    component: HelpDeskAppointments,
-    // meta: { requiresAuth: true, role: 'helpdesk' }
   },
   // Doctor routes
   {
@@ -108,21 +94,6 @@ const routes = [
     name: 'doctor-schedule',
     component: DoctorSchedule,
     // meta: { requiresAuth: true, role: 'doctor' }
-  },
-  {
-    path: '/helpdesk/profile',
-    name: 'helpdesk-profile',
-    component: HelpDeskProfile
-  },
-  {
-    path: '/dashboard/profile',
-    name: 'admin-profile',
-    component: AdminProfile
-  },
-  {
-    path: '/doctor/profile',
-    name: 'doctor-profile',
-    component: DoctorProfile
   }
 ]
 
@@ -140,32 +111,14 @@ router.beforeEach((to, from, next) => {
     return
   }
 
-  // Role-based routing
-  if (user) {
-    if (user.role === 'doctor' && to.path.startsWith('/dashboard') && !to.path.startsWith('/doctor')) {
-      next('/doctor/dashboard')
-      return
-    }
+  if (user && user.role === 'doctor' && to.path.startsWith('/dashboard') && !to.path.startsWith('/doctor')) {
+    next('/doctor/dashboard')
+    return
+  }
 
-    if (user.role === 'helpdesk' && to.path.startsWith('/dashboard') && !to.path.startsWith('/helpdesk')) {
-      next('/helpdesk/dashboard')
-      return
-    }
-
-    if (user.role === 'admin' && (to.path.startsWith('/doctor') || to.path.startsWith('/helpdesk'))) {
-      next('/dashboard')
-      return
-    }
-
-    if (user.role !== 'doctor' && to.path.startsWith('/doctor')) {
-      next('/dashboard')
-      return
-    }
-
-    if (user.role !== 'helpdesk' && to.path.startsWith('/helpdesk')) {
-      next('/dashboard')
-      return
-    }
+  if (user && user.role !== 'doctor' && to.path.startsWith('/doctor')) {
+    next('/dashboard')
+    return
   }
 
   next()

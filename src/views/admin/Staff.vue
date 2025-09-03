@@ -32,10 +32,8 @@
               class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <option value="">All Roles</option>
               <option value="doctor">Doctor</option>
-              <option value="nurse">Nurse</option>
-              <option value="receptionist">Receptionist</option>
               <option value="admin">Admin</option>
-              <option value="technician">Technician</option>
+              <option value="help desk">Help Desk</option>
             </select>
           </div>
           <div>
@@ -234,10 +232,10 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Select Role</option>
                         <option value="doctor">Doctor</option>
-                        <option value="nurse">Nurse</option>
-                        <option value="receptionist">Receptionist</option>
                         <option value="admin">Admin</option>
-                        <option value="technician">Technician</option>
+                        <option value="help desk">Help Desk</option>
+
+
                       </select>
                     </div>
 
@@ -471,14 +469,10 @@ const getRoleClasses = (role) => {
   switch (role) {
     case 'doctor':
       return `${baseClasses} bg-blue-100 text-blue-800`
-    case 'nurse':
+    case 'help desk':
       return `${baseClasses} bg-green-100 text-green-800`
-    case 'receptionist':
-      return `${baseClasses} bg-purple-100 text-purple-800`
     case 'admin':
       return `${baseClasses} bg-red-100 text-red-800`
-    case 'technician':
-      return `${baseClasses} bg-yellow-100 text-yellow-800`
     default:
       return `${baseClasses} bg-gray-100 text-gray-800`
   }
@@ -534,6 +528,8 @@ const fetchStaff = async () => {
   loading.value = true
   try {
     const response = await getUsers()
+    console.log(response);
+
     staff.value = response.data
   } catch (error) {
     // Handle error (e.g., show notification)
