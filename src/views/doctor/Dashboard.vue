@@ -18,7 +18,8 @@
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
             </div>
@@ -34,7 +35,8 @@
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
               </div>
             </div>
@@ -50,7 +52,8 @@
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
             </div>
@@ -66,7 +69,8 @@
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
             </div>
@@ -86,7 +90,8 @@
           </div>
           <div class="p-6">
             <div class="space-y-4">
-              <div v-for="appointment in todayAppointments" :key="appointment.id" class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div v-for="appointment in todayAppointments" :key="appointment.id"
+                class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <div class="flex items-center">
                   <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center">
                     <span class="text-sm font-medium text-white">
@@ -112,7 +117,7 @@
         <!-- Recent Patients -->
         <div class="bg-white rounded-lg shadow-sm border">
           <div class="p-6 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">Recent Patients</h3>
+            <h3 class="text-lg font-medium text-gray-900">Recent Appointments</h3>
           </div>
           <div class="p-6">
             <div class="space-y-4">
@@ -144,59 +149,36 @@
 import { ref, computed, onMounted } from 'vue'
 import DoctorLayout from '@/components/DoctorLayout.vue'
 import { useAuthStore } from '@/stores/auth'
+import api from '@/plugins/axios'
 
 const authStore = useAuthStore()
 const user = computed(() => authStore.user)
 
-// Data
+
 const todayStats = ref({
   appointments: 0,
   totalPatients: 0,
   pending: 0,
-  prescriptions: 0
+  completed: 0
 })
 
-const todayAppointments = ref([
-  // {
-  //   id: 1,
-  //   patient_name: 'John Smith',
-  //   service_name: 'General Consultation',
-  //   appointment_time: '2024-01-15T09:00:00',
-  //   status: 'confirmed'
-  // },
-  // {
-  //   id: 2,
-  //   patient_name: 'Sarah Johnson',
-  //   service_name: 'Follow-up',
-  //   appointment_time: '2024-01-15T10:30:00',
-  //   status: 'pending'
-  // },
-  // {
-  //   id: 3,
-  //   patient_name: 'Mike Brown',
-  //   service_name: 'Cardiology Check',
-  //   appointment_time: '2024-01-15T14:00:00',
-  //   status: 'confirmed'
-  // }
-])
+const todayAppointments = ref([])
+const recentPatients = ref([])
 
-const recentPatients = ref([
-  // {
-  //   id: 1,
-  //   name: 'Emily Davis',
-  //   last_visit: '2024-01-14'
-  // },
-  // {
-  //   id: 2,
-  //   name: 'Robert Wilson',
-  //   last_visit: '2024-01-13'
-  // },
-  // {
-  //   id: 3,
-  //   name: 'Lisa Anderson',
-  //   last_visit: '2024-01-12'
-  // }
-])
+
+// Fetch dashboard data
+const fetchDashboard = async () => {
+  try {
+    const response = await api.get('/dashboard/summary')
+    const data = response.data
+
+    todayStats.value = data.todayStats
+    todayAppointments.value = data.todayAppointments
+    recentPatients.value = data.recentPatients
+  } catch (error) {
+    console.error('Failed to fetch dashboard data:', error)
+  }
+}
 
 // Methods
 const getStatusClasses = (status) => {
@@ -236,7 +218,6 @@ const formatDate = (dateString) => {
 
 // Lifecycle
 onMounted(() => {
-  // Fetch doctor's dashboard data
-  console.log('Doctor dashboard mounted for:', user.value)
+  fetchDashboard()
 })
 </script>

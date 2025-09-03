@@ -14,6 +14,20 @@ export const getAppointments = async () => {
         }
     }
 }
+export const getAppointmentsForDoctor = async (id) => {
+    try {
+        const response = await api.get(API_URL, {
+            params: { doctor: id }
+        })
+        return { success: true, data: response.data }
+    } catch (error) {
+        return {
+            success: false,
+            message: error.response?.data?.message || 'Failed to fetch appointments',
+        }
+    }
+}
+
 
 // Fetch a single appointment
 export const getAppointmentById = async (id) => {
@@ -42,7 +56,6 @@ export const createAppointment = async (appointmentData) => {
     }
 }
 
-// Update an appointment
 export const updateAppointment = async (id, appointmentData) => {
     try {
         const response = await api.put(`${API_URL}/${id}`, appointmentData)
@@ -57,7 +70,7 @@ export const updateAppointment = async (id, appointmentData) => {
 }
 
 // Delete an appointment
-export const deleteAppointment = async (id) => {
+export const deleteAppointmentById = async (id) => {
     try {
         await api.delete(`${API_URL}/${id}`)
         return { success: true }
