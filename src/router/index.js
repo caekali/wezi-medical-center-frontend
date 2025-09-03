@@ -13,6 +13,7 @@ import DoctorDashboard from "@/views/doctor/Dashboard.vue";
 import DoctorAppointments from "@/views/doctor/Appointments.vue";
 import DoctorSchedule from "@/views/doctor/Schedule.vue";
 import DashboardServices from '@/views/admin/DashboardServices.vue'
+import ForgotPassword from '@/views/auth/ForgotPassword.vue'
 
 const routes = [
   {
@@ -26,7 +27,7 @@ const routes = [
     component: AdminDepartments
   },
   {
-   path: '/dashboard/services',
+    path: '/dashboard/services',
     name: 'dashboard-services',
     component: DashboardServices
   },
@@ -36,6 +37,12 @@ const routes = [
     component: Login
   },
   {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: ForgotPassword
+  },
+
+  {
     path: '/book-appointment',
     name: 'book-appointment',
     component: BookAppointment
@@ -44,7 +51,7 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
-    // meta: { requiresAuth: true, role: 'admin' }
+    meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/appointments',

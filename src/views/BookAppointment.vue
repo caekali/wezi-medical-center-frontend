@@ -7,6 +7,8 @@ import BaseSelect from '../components/BaseSelect.vue'
 import Navigation from "@/components/Navigation.vue";
 import { getDepartments } from '@/services/departmentService'
 import { getDoctorByDepartment } from '@/services/doctorService'
+import { getDepartmentServices } from '@/services/serviceService'
+import { createAppointment } from '@/services/appointmentService'
 
 const router = useRouter()
 
@@ -16,7 +18,7 @@ const appointmentForm = ref({
   department_id: '',
   service_id: '',
   appointment_date: '',
-  appointment_time: '',
+  // appointment_time: '',
   doctor_id: ''
 })
 
@@ -58,12 +60,11 @@ const loadServices = async (departmentId) => {
   appointmentForm.value.service_id = ''
   if (!departmentId) return
 
-  const { success, data, message } = await ger()
+  const { success, data, message } = await getDepartmentServices(departmentId)
   if (success) {
-    departments.value = data
     services.value = data.map(service => ({
       value: service.id,
-      label: service.name
+      label: `${service.name} - MWK ${service.price}`
     }))
   } else {
     errors.value = message
@@ -112,17 +113,19 @@ const generateTimeSlots = () => {
   availableTimeSlots.value = slots
 }
 
-// Validation
 const isValidPhone = computed(() => {
-  const phoneRegex = /^[\+]?[\d\s\-\(\)]{10,}$/
-  return phoneRegex.test(appointmentForm.value.phone_number)
+  const phone = appointmentForm.value.phone_number.trim()
+
+  // Allow +, spaces, parentheses, dashes
+  const phoneRegex = /^\+?[0-9\s\-()]{8,20}$/
+
+  // Extract digits only
+  const digits = phone.replace(/\D/g, '')
+
+  // Must be 8–15 digits (E.164 range)
+  return phoneRegex.test(phone) && digits.length >= 8 && digits.length <= 15
 })
 
-const isValidDate = computed(() => {
-  if (!appointmentForm.value.appointment_date) return false
-  // Add your date validation logic here if needed
-  return true
-})
 
 const isFormValid = computed(() => {
   return appointmentForm.value.patient_name.trim() &&
@@ -130,9 +133,9 @@ const isFormValid = computed(() => {
     appointmentForm.value.department_id &&
     appointmentForm.value.service_id &&
     appointmentForm.value.appointment_date &&
-    appointmentForm.value.appointment_time &&
-    isValidPhone.value &&
-    isValidDate.value
+    // appointmentForm.value.appointment_time
+  isValidPhone.value
+  // isValidDate.value
 })
 
 // Get minimum date (today)
@@ -154,34 +157,20 @@ const submitAppointment = async () => {
   isSubmitting.value = true
   errors.value = {}
 
-  try {
-    const response = await fetch('/api/appointments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
-      body: JSON.stringify(appointmentForm.value)
-    })
+  const result = await createAppointment(appointmentForm.value)
 
-    const data = await response.json()
-
-    if (response.ok) {
-      alert('Appointment booked successfully! We will contact you to confirm.')
-      router.push('/')
+  if (result.success) {
+    alert('Appointment booked successfully! We will contact you to confirm.')
+    router.push('/')
+  } else {
+    if (result.errors) {
+      errors.value = result.errors
     } else {
-      if (data.errors) {
-        errors.value = data.errors
-      } else {
-        errors.value.general = data.message || 'Failed to book appointment. Please try again.'
-      }
+      errors.value.general = result.message
     }
-  } catch (error) {
-    console.error('Booking error:', error)
-    errors.value.general = 'Network error. Please check your connection and try again.'
-  } finally {
-    isSubmitting.value = false
   }
+
+  isSubmitting.value = false
 }
 
 // Service options for select
@@ -236,33 +225,36 @@ const onDepartmentChange = async (val) => {
                     placeholder="Enter your full name" :error="errors.patient_name" :required="true" autocomplete="name"
                     @focus="clearError('patient_name')" />
                   <BaseInput id="phone_number" label="Phone Number" v-model="appointmentForm.phone_number" type="tel"
-                    placeholder="+1 (555) 123-4567" :error="errors.phone_number" :required="true" autocomplete="tel"
+                    placeholder="Phone number" :error="errors.phone_number" :required="true" autocomplete="tel"
                     @focus="clearError('phone_number')" />
                 </div>
-                <BaseSelect id="department_id" label="Department" v-model="appointmentForm.department_id"
-                  placeholder="Select a department" :options="departmentOptions" :error="errors.department_id"
-                  :required="true" @update:modelValue="onDepartmentChange" />
-                <BaseSelect id="service_id" label="Service" v-model="appointmentForm.service_id"
-                  placeholder="Select a service" :options="serviceOptions" :error="errors.service_id" :required="true"
-                  @update:modelValue="clearError('service_id')" />
+
               </div>
 
               <h3 class="text-lg font-medium text-gray-900 mb-4">Appointment Details</h3>
               <div class="grid grid-cols-1 gap-6">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <BaseSelect id="department_id" label="Department" v-model="appointmentForm.department_id"
+                    placeholder="Select a department" :options="departmentOptions" :error="errors.department_id"
+                    :required="true" @update:modelValue="onDepartmentChange" />
+                  <BaseSelect id="service_id" label="Service" v-model="appointmentForm.service_id"
+                    placeholder="Select a service" :options="serviceOptions" :error="errors.service_id" :required="true"
+                    @update:modelValue="clearError('service_id')" />
+                </div>
+
+
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <BaseSelect id="doctor_id" label="Doctor" :required="true" v-model="appointmentForm.doctor_id"
+                    placeholder="Select a doctor" :options="doctorOptions" :error="errors.doctor_id"
+                    @update:modelValue="clearError('doctor_id')" />
                   <BaseInput id="appointment_date" label="Preferred Date" v-model="appointmentForm.appointment_date"
                     type="date" :min="minDate" :error="errors.appointment_date" :required="true"
                     @focus="clearError('appointment_date')" />
-                  <BaseSelect id="appointment_time" label="Preferred Time" v-model="appointmentForm.appointment_time"
-                    placeholder="Select a time" :options="availableTimeSlots" :error="errors.appointment_time"
-                    :required="true" @update:modelValue="clearError('appointment_time')" />
+
                 </div>
-                <BaseSelect id="doctor_id" label="Doctor Preference" v-model="appointmentForm.doctor_id"
-                  placeholder="Select a doctor (optional)" :options="doctorOptions" :error="errors.doctor_id"
-                  @update:modelValue="clearError('doctor_id')" />
               </div>
 
-              <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+              <!-- <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
                 <div class="flex">
                   <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -280,7 +272,7 @@ const onDepartmentChange = async (val) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="flex justify-end space-x-3">
                 <button type="button" @click="router.push('/')"
@@ -309,7 +301,7 @@ const onDepartmentChange = async (val) => {
           <p class="text-sm text-gray-600">
             Need help booking? Call us at
             <a href="tel:+1234567890" class="text-indigo-600 hover:text-indigo-500 font-medium">
-              (123) 456-7890
+              (111) 456-7890
             </a>
             or
             <router-link to="/contact" class="text-indigo-600 hover:text-indigo-500 font-medium">
