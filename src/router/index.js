@@ -10,11 +10,13 @@ import DashboardPatients from "@/views/DashboardPatients.vue";
 import DashboardSettings from "@/views/DashboardSettings.vue";
 import AdminDepartments from "@/views/admin/AdminDepartments.vue";
 import DoctorDashboard from "@/views/doctor/Dashboard.vue";
+import HelpDeskDashboard from "@/views/helpdesk/Dashboard.vue";
 import DoctorAppointments from "@/views/doctor/Appointments.vue";
 import DoctorSchedule from "@/views/doctor/Schedule.vue";
 import DashboardServices from '@/views/admin/DashboardServices.vue'
 import { useAuthStore } from '@/stores/auth'
 import HelpDeskProfile from '@/views/helpdesk/Profile.vue'
+import HelpDeskAppointments from '@/views/helpdesk/Appointments.vue'
 
 const routes = [
   {
@@ -103,12 +105,17 @@ const routes = [
     name: 'helpdesk-profile',
     component: HelpDeskProfile,
     meta: { requiresAuth: true, role: 'doctor' }
+  }, {
+    path: '/helpdesk/appointments',
+    name: 'helpdesk-appointments',
+    component: HelpDeskAppointments,
+    meta: { requiresAuth: true, role: 'doctor' }
   }
 
    , {
     path: '/helpdesk/dashboard',
     name: 'helpdesk-dashboard',
-    component: ,
+    component: HelpDeskDashboard,
     meta: { requiresAuth: true, role: 'doctor' }
   }
 

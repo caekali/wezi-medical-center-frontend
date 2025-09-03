@@ -143,7 +143,6 @@ const user = computed(() => authStore.user)
 
 const navigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
-  { name: 'Appointments', href: '/dashboard/appointments', icon: AppointmentsIcon },
   { name: 'Staff', href: '/dashboard/staff', icon: StaffIcon },
   { name: 'Departments', href: '/dashboard/departments', icon: DepartmentsIcon },
   { name: 'Services', href: '/dashboard/services', icon: DepartmentsIcon },
