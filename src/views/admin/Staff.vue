@@ -321,8 +321,8 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import AuthenticatedLayout from '@/components/AuthenticatedLayout.vue'
-import { useAuthStore } from '@/stores/auth'
-import { createUser, deleteUser, getUsers, updateUser } from '@/services/userService'
+import { useAuthStore } from '@/stores/auth.js'
+import { createUser, deleteUser, getUsers, updateUser } from '@/services/userService.js'
 
 const authStore = useAuthStore()
 

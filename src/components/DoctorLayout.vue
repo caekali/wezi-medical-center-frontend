@@ -108,7 +108,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <h1 class="ml-2 text-xl font-semibold text-gray-900">{{ pageTitle }}</h1>
           </div>
 
           <div class="flex items-center space-x-4">
@@ -173,10 +172,7 @@ const user = computed(() => authStore.user)
 const navigationItems = [
   { name: 'Dashboard', href: '/doctor/dashboard', icon: DashboardIcon },
   { name: 'My Appointments', href: '/doctor/appointments', icon: AppointmentsIcon },
-  { name: 'My Patients', href: '/doctor/patients', icon: PatientsIcon },
-  { name: 'Medical Records', href: '/doctor/medical-records', icon: MedicalRecordsIcon },
   { name: 'My Schedule', href: '/doctor/schedule', icon: ScheduleIcon },
-  { name: 'Prescriptions', href: '/doctor/prescriptions', icon: PrescriptionsIcon },
 ]
 
 const handleLogout = () => {

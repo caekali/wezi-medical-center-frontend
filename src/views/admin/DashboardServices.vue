@@ -162,8 +162,8 @@ import { ref, computed, onMounted } from 'vue'
 import AuthenticatedLayout from '@/components/AuthenticatedLayout.vue'
 import BaseInput from '@/components/BaseInput.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
-import { deleteDepartmentById, getDepartments } from '@/services/departmentService'
-import { createDepartmentService, deleteDepartmentService, getDepartmentService, getServices, updateDepartmentService } from '@/services/serviceService'
+import { deleteDepartmentById, getDepartments } from '@/services/departmentService.js'
+import { createDepartmentService, deleteDepartmentService, getDepartmentService, getServices, updateDepartmentService } from '@/services/serviceService.js'
 
 const departments = ref([])
 const serivces = ref([])

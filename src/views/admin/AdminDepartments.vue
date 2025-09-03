@@ -130,7 +130,7 @@ import { ref, computed, onMounted } from 'vue'
 import AuthenticatedLayout from '@/components/AuthenticatedLayout.vue'
 import BaseInput from '@/components/BaseInput.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
-import { createDepartment, deleteDepartmentById, getDepartment, getDepartments, updateDepartment } from '@/services/departmentService'
+import { createDepartment, deleteDepartmentById, getDepartment, getDepartments, updateDepartment } from '@/services/departmentService.js'
 
 const departments = ref([])
 const searchTerm = ref('')

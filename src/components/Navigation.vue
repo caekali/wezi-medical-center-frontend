@@ -14,10 +14,8 @@ const props = defineProps({
 const navigationItems = [
   { name: 'Home', href: '/', id: 'home', isRoute: true },
   { name: 'Departments', href: '/departments', id: 'departments', isRoute: true },
-  { name: 'Appointments', href: '/book-appointment', id: 'appointments', isRoute: false },
-  { name: 'Navigation Map', href: '#map', id: 'map', isRoute: false },
-  { name: 'Map', href: '#map', id: 'map', isRoute: false },
-  { name: 'Chat with Us', href: '#map', id: 'chat', isRoute: false },
+  { name: 'Appointments', href: '/book-appointment', id: 'appointments', isRoute: true },
+  { name: 'Navigation Map', href: '/map', id: 'map', isRoute: true },
 ]
 
 const isActiveLink = (href, isRoute) => {

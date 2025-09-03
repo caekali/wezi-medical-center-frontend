@@ -155,7 +155,7 @@ const navigationItems = [
   { name: 'Staff', href: '/dashboard/staff', icon: StaffIcon },
   { name: 'Departments', href: '/dashboard/departments', icon: DepartmentsIcon },
   { name: 'Services', href: '/dashboard/services', icon: DepartmentsIcon },
-  { name: 'Settings', href: '/dashboard/settings', icon: SettingsIcon },
+  // { name: 'Settings', href: '/dashboard/settings', icon: SettingsIcon },
 ]
 
 const handleLogout = () => {

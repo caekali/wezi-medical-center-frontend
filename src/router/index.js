@@ -3,16 +3,16 @@ import Home from '../views/Home.vue'
 import Departments from '../views/Departments.vue'
 import Login from '../views/auth/Login.vue'
 import BookAppointment from '@/views/BookAppointment.vue'
-import Dashboard from "@/views/Dashboard.vue";
-import DashboardAppointments from "@/views/DashboardAppointments.vue";
-import DashboardStaff from "@/views/DashboardStaff.vue";
+import Dashboard from "@/views/admin/Dashboard.vue";
+import Appointments from "@/views/admin/Appointments.vue";
+import Staff from "@/views/admin/Staff.vue";
 import DashboardPatients from "@/views/DashboardPatients.vue";
 import DashboardSettings from "@/views/DashboardSettings.vue";
-import DashboardDepartments from "@/views/DashboardDepartments.vue";
-import DoctorDashboard from "@/views/Doctor/Dashboard.vue";
-import DoctorAppointments from "@/views/Doctor/Appointments.vue";
-import DoctorSchedule from "@/views/Doctor/Schedule.vue";
-import DashboardServices from '@/views/DashboardServices.vue'
+import AdminDepartments from "@/views/admin/AdminDepartments.vue";
+import DoctorDashboard from "@/views/doctor/Dashboard.vue";
+import DoctorAppointments from "@/views/doctor/Appointments.vue";
+import DoctorSchedule from "@/views/doctor/Schedule.vue";
+import DashboardServices from '@/views/admin/DashboardServices.vue'
 
 const routes = [
   {
@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/departments',
     name: 'departments',
-    component: Departments
+    component: AdminDepartments
   },
   {
    path: '/dashboard/services',
@@ -49,13 +49,13 @@ const routes = [
   {
     path: '/dashboard/appointments',
     name: 'dashboard-appointments',
-    component: DashboardAppointments,
+    component: Appointments,
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
     path: '/dashboard/departments',
     name: 'dashboard-departments',
-    component: DashboardDepartments,
+    component: AdminDepartments,
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
@@ -67,7 +67,7 @@ const routes = [
   {
     path: '/dashboard/staff',
     name: 'dashboard-staff',
-    component: DashboardStaff,
+    component: Staff,
     // meta: { requiresAuth: true, role: 'admin' }
   },
   {
