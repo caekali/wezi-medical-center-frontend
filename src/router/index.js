@@ -19,6 +19,8 @@ import DoctorSchedule from "@/views/doctor/Schedule.vue";
 import DashboardServices from '@/views/admin/DashboardServices.vue'
 import { useAuthStore } from '@/stores/auth'
 import HelpDeskProfile from '@/views/helpdesk/Profile.vue'
+import DoctorProfile from '@/views/doctor/Profile.vue'
+
 import HelpDeskAppointments from '@/views/helpdesk/Appointments.vue'
 
 const routes = [
@@ -102,7 +104,15 @@ const routes = [
     name: 'doctor-schedule',
     component: DoctorSchedule,
     meta: { requiresAuth: true, role: 'doctor' }
+  },
+  {
+    path: '/doctor/profile',
+    name: 'doctor-profile',
+    component: DoctorProfile,
+    meta: { requiresAuth: true, role: 'doctor' }
   }
+
+ 
   , {
     path: '/helpdesk/profile',
     name: 'helpdesk-profile',

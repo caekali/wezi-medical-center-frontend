@@ -4,7 +4,7 @@
       <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-900">My Appointments</h1>
         <p class="text-gray-600">Manage your patient appointments</p>
-      </div> 
+      </div>
       <div class="mb-6">
         <div class="border-b border-gray-200">
           <nav class="-mb-px flex space-x-8"> <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id"
@@ -12,7 +12,7 @@
               {{ tab.name }} <span class="ml-2 px-2 py-0.5 rounded-full text-xs bg-gray-100"> {{
                 getAppointmentCount(tab.id) }} </span> </button> </nav>
         </div>
-      </div> 
+      </div>
       <div class="bg-white shadow rounded-lg">
         <div class="px-6 py-4 border-b border-gray-200">
           <h3 class="text-lg font-medium text-gray-900"> {{tabs.find(t => t.id === activeTab)?.name}} Appointments </h3>
@@ -117,9 +117,13 @@ const rescheduleForm = ref({
 
 const tabs = [
   { id: 'today', name: 'Today' },
-  { id: 'upcoming', name: 'Upcoming' },
+  { id: 'pending', name: 'Pending' },
+  { id: 'confirmed', name: 'Confirmed' },
   { id: 'completed', name: 'Completed' },
+  { id: 'rescheduled', name: 'Rescheduled' },
   { id: 'cancelled', name: 'Cancelled' }
+
+
 ]
 
 const filteredAppointments = computed(() => {
@@ -132,11 +136,15 @@ const filteredAppointments = computed(() => {
 
     switch (activeTab.value) {
       case 'today':
-        return appointmentDate.getTime() === today.getTime() && appointment.status === 'scheduled'
-      case 'upcoming':
-        return appointmentDate > today && appointment.status === 'scheduled'
+        return appointmentDate.getTime() === today.getTime() && appointment.status === 'pending'
+      case 'pending':
+        return appointmentDate > today && appointment.status === 'pending'
+      case 'confirmed':
+        return appointment.status === 'confirmed'
       case 'completed':
         return appointment.status === 'completed'
+      case 'rescheduled':
+        return appointment.status === 'rescheduled'
       case 'cancelled':
         return appointment.status === 'cancelled'
       default:
@@ -175,10 +183,14 @@ const getAppointmentCount = (tabId) => {
     switch (tabId) {
       case 'today':
         return appointmentDate.getTime() === today.getTime() && appointment.status === 'scheduled'
-      case 'upcoming':
-        return appointmentDate > today && appointment.status === 'scheduled'
-      case 'completed':
+      case 'pending':
+        return appointmentDate > today && appointment.status === 'pending'
+      case 'confirmed':
+        return appointment.status === 'confirmed'
+        case 'completed':
         return appointment.status === 'completed'
+      case 'rescheduled':
+        return appointment.status === 'rescheduled'
       case 'cancelled':
         return appointment.status === 'cancelled'
       default:
