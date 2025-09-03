@@ -1,0 +1,138 @@
+
+{
+  "navigation": {
+    "home": "Kunyumba",
+    "departments": "Masevisi",
+    "appointments": "Nthawi za Kudziwa",
+    "navigationMap": "Mapu ya Njira",
+    "login": "Kulowa",
+    "language": "Chilankhulo"
+  },
+  "home": {
+    "title": "TIZITSAMIRENI",
+    "subtitle": "Tikukhulupirira kuti ndife phewa lomwe anthu angasamirire, mnzathu ndi chitonthozo pa nthawi yamasautso.",
+    "bookAppointment": "Lembani Nthawi",
+    "explorServices": "Onani Ntchito Zathu"
+  },
+  "departments": {
+    "title": "Masevisi",
+    "subtitle": "Timapereka ntchito za umoyo zokwanira m'magulu osiyanasiyana, kupereka chisamaliro cha akatswiri ndi ukadaulo wamakono ndi akatswiri achifundo.",
+    "keyServices": "Ntchito Zazikulu",
+    "ctaTitle": "Mukufuna Thandizo la Zamankhwala?",
+    "ctaSubtitle": "Akatswiri athu azamankhwala ali okonzeka kukupatsani chisamaliro chabwino kwambiri. Lembani nthawi lero.",
+    "emergency": "Zadzidzidzi: 0996 817 322",
+    "departmentsList": {
+      "general": {
+        "name": "Zamankhwala za Wamba",
+        "description": "Ntchito zonse za umoyo woyambira kwa odwala a zaka zonse.",
+        "services": [
+          "Kuyeza Thupi Chaka chilichonse",
+          "Chisamaliro Choteteza",
+          "Kasamalidwe ka Matenda Osatha",
+          "Kuyeza Thanzi",
+          "Katemera"
+        ]
+      },
+      "dental_care": {
+        "name": "Chisamaliro cha Mano",
+        "description": "Kusunga mano, utoto ndi pakamwa pathu pathanzi.",
+        "services": [
+          "Kubvunza za Mano",
+          "Kuchotsa Matsanza ndi Kupukusa",
+          "Kutulutsa Mano",
+          "Kukongoletsa"
+        ]
+      },
+      "radiology": {
+        "name": "Radiology",
+        "description": "Ntchito za kujambula thupi ndi kuzindikira matenda.",
+        "services": [
+          "CT Scan",
+          "X-Ray ya Makono",
+          "Ultrasonic Yapamwamba",
+          "Mayeso Apadera a Radiology"
+        ]
+      },
+      "pediatrics": {
+        "name": "Za Ana",
+        "description": "Chisamaliro chapadera cha makanda, ana ndi achinyamata.",
+        "services": [
+          "Kuyendera Ana Athanzi",
+          "Katemera",
+          "Kuyang'anira Kukula",
+          "Kuyesa Kukula",
+          "Chithandizo cha Mwadzidzidzi cha Ana"
+        ]
+      },
+      "antenatal": {
+        "name": "Chisamaliro cha Pakati",
+        "description": "Chisamaliro chokwanira cha pakati ndi kuyang'anira amayi oyembekezera ndi ana awo pakati pa mimba.",
+        "services": [
+          "Kuyendera Pakati",
+          "Kujambula Mimba",
+          "Kuyang'anira Pakati",
+          "Uphungu wa Zakudya",
+          "Kukonza Kubadwa"
+        ]
+      },
+      "emergency": {
+        "name": "Chithandizo cha Mwadzidzidzi",
+        "description": "Ntchito za zamankhwala za mwadzidzidzi masiku onse 24/7 ndi kuthandiza mwachangu.",
+        "services": [
+          "Chisamaliro cha Zovulala",
+          "Chisamaliro Chofunika Kwambiri",
+          "Opaleshoni ya Mwadzidzidzi",
+          "Kuzindikira Mwachangu",
+          "Ntchito za Ambulansi"
+        ]
+      }
+    }
+  },
+  "appointment": {
+    "title": "Lembani Nthawi ya Kudziwa",
+    "subtitle": "Konzani kuyendera kwanu ndi akatswiri athu azamankhwala",
+    "patientInfo": "Zambiri za Wodwala",
+    "appointmentDetails": "Zambiri za Nthawi",
+    "fullName": "Dzina Lonse",
+    "phoneNumber": "Nambala ya Foni",
+    "department": "Dipatimenti",
+    "service": "Ntchito",
+    "doctor": "Dokotala",
+    "preferredDate": "Tsiku Losankha",
+    "cancel": "Leka",
+    "booking": "Kulemba...",
+    "bookAppointment": "Lembani Nthawi",
+    "needHelp": "Mukufuna thandizo kulemba? Tiyimbirani pa",
+    "contactSupport": "pezani thandizo",
+    "placeholders": {
+      "fullName": "Lembani dzina lanu lonse",
+      "phoneNumber": "Nambala ya foni",
+      "selectDepartment": "Sankhani dipatimenti",
+      "selectService": "Sankhani ntchito",
+      "selectDoctor": "Sankhani dokotala"
+    }
+  },
+  "helpdesk": {
+    "dashboard": {
+      "welcomeBack": "Takulandirani kubwerera",
+      "currentTime": "Nthawi ya panopa",
+      "todayAppointments": "Nthawi za Lero",
+      "awaitingResponse": "Akuyembekezera Yankho",
+      "walkInQueue": "Mizere ya Obwera Mosalembetsa",
+      "processedToday": "Zomwe Zachitika Lero",
+      "priorityActions": "Zochita Zofunika Kwambiri",
+      "quickActions": "Zochita Mwachangu",
+      "performanceMetrics": "Kuchita Kwabwino kwa Lero",
+      "recentAppointments": "Nthawi Zaposachedwa",
+      "avgResponseTime": "Nthawi ya Kuyankha Pakatikati",
+      "satisfactionRate": "Kukhutira",
+      "tasksCompleted": "Ntchito Zomalizidwa",
+      "actions": {
+        "bookAppointment": "Lembani Nthawi Yatsopano",
+        "searchPatients": "Funani Odwala",
+        "registerWalkIn": "Lembetsani Wobwera Mosalembetsa",
+        "manageAppointments": "Yambirani Nthawi"
+      }
+    }
+  }
+}

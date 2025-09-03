@@ -1,8 +1,12 @@
+<!-- src/components/Navigation.vue -->
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const route = useRoute()
+const { t, locale } = useI18n()
+const showLanguageDropdown = ref(false)
 
 const props = defineProps({
   isTransparent: {
@@ -11,12 +15,29 @@ const props = defineProps({
   }
 })
 
-const navigationItems = [
-  { name: 'Home', href: '/', id: 'home', isRoute: true },
-  { name: 'Departments', href: '/departments', id: 'departments', isRoute: true },
-  { name: 'Appointments', href: '/book-appointment', id: 'appointments', isRoute: true },
-  { name: 'Navigation Map', href: '/map', id: 'map', isRoute: true },
+const navigationItems = computed(() => [
+  { name: t('navigation.home'), href: '/', id: 'home', isRoute: true },
+  { name: t('navigation.departments'), href: '/departments', id: 'departments', isRoute: true },
+  { name: t('navigation.appointments'), href: '/book-appointment', id: 'appointments', isRoute: true },
+  { name: t('navigation.navigationMap'), href: '/map', id: 'map', isRoute: true },
+  { name: t('navigation.about'), href: '/about', id: 'about', isRoute: true },
+])
+
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'ny', name: 'Chichewa', flag: '🇲🇼' }
 ]
+
+const currentLanguage = computed(() =>
+    languages.find(lang => lang.code === locale.value) || languages[0]
+)
+
+const changeLanguage = (langCode) => {
+  locale.value = langCode
+  localStorage.setItem('locale', langCode)
+  showLanguageDropdown.value = false
+}
 
 const isActiveLink = (href, isRoute) => {
   if (isRoute) {
@@ -30,39 +51,39 @@ const isActiveLink = (href, isRoute) => {
 
 const headerClasses = computed(() => {
   return props.isTransparent
-    ? ''
-    : 'bg-black/30 shadow-sm'
+      ? ''
+      : 'bg-black/30 shadow-sm'
 })
 
 const logoClasses = computed(() => {
   return props.isTransparent
-    ? 'text-white'
-    : 'text-white'
+      ? 'text-white'
+      : 'text-white'
 })
 
 const navLinkClasses = computed(() => {
   return props.isTransparent
-    ? 'text-white hover:text-indigo-300'
-    : 'text-white hover:text-indigo-600'
+      ? 'text-white hover:text-indigo-300'
+      : 'text-white hover:text-indigo-600'
 })
 
 const loginButtonClasses = computed(() => {
   return props.isTransparent
-    ? 'text-indigo-950 bg-white hover:bg-gray-100'
-    : 'text-white bg-indigo-600 hover:bg-indigo-700'
+      ? 'text-indigo-950 bg-white hover:bg-gray-100'
+      : 'text-white bg-indigo-600 hover:bg-indigo-700'
 })
 </script>
 
 <template>
   <header
-    :class="headerClasses"
-    class="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-6 w-full transition-colors duration-300"
-    role="banner"
+      :class="headerClasses"
+      class="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-6 w-full transition-colors duration-300"
+      role="banner"
   >
     <router-link
-      to="/"
-      :class="logoClasses"
-      class="flex items-center font-bold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent rounded transition-colors"
+        to="/"
+        :class="logoClasses"
+        class="flex items-center font-bold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent rounded transition-colors"
     >
       <div class="h-10 w-10 bg-white rounded-full flex items-center justify-center mr-2">
         <img src="../assets/logo.png" alt="Wezi Medical Center Logo" class="h-8 w-8 object-contain">
@@ -71,31 +92,31 @@ const loginButtonClasses = computed(() => {
     </router-link>
 
     <nav
-      class="hidden font-semibold md:flex items-center justify-center gap-8 text-sm"
-      role="navigation"
-      aria-label="Main navigation"
+        class="hidden font-semibold md:flex items-center justify-center gap-8 text-sm"
+        role="navigation"
+        aria-label="Main navigation"
     >
       <template v-for="item in navigationItems" :key="item.id">
         <router-link
-          v-if="item.isRoute"
-          :to="item.href"
-          :class="[
+            v-if="item.isRoute"
+            :to="item.href"
+            :class="[
             navLinkClasses,
             isActiveLink(item.href, item.isRoute) ? 'border text-indigo-50 font-semibold' : ''
           ]"
-          class="transition focus:outline-none focus:ring-2 rounded px-2 py-1"
-          :aria-current="isActiveLink(item.href, item.isRoute) ? 'page' : undefined"
+            class="transition focus:outline-none focus:ring-2 rounded px-2 py-1"
+            :aria-current="isActiveLink(item.href, item.isRoute) ? 'page' : undefined"
         >
           {{ item.name }}
         </router-link>
         <a
-          v-else
-          :href="item.href"
-          :class="[
+            v-else
+            :href="item.href"
+            :class="[
             navLinkClasses,
             isActiveLink(item.href, item.isRoute) ? 'text-indigo-500 font-semibold' : ''
           ]"
-          class="transition focus:outline-none focus:ring-2 rounded px-2 py-1"
+            class="transition focus:outline-none focus:ring-2 rounded px-2 py-1"
         >
           {{ item.name }}
         </a>
@@ -103,14 +124,65 @@ const loginButtonClasses = computed(() => {
     </nav>
 
     <div class="flex items-center space-x-4">
+      <!-- Language Selector -->
+      <div class="relative">
+        <button
+            @click="showLanguageDropdown = !showLanguageDropdown"
+            :class="navLinkClasses"
+            class="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition focus:outline-none focus:ring-2"
+            :aria-label="t('navigation.language')"
+        >
+          <span>{{ currentLanguage.flag }}</span>
+          <span class="hidden md:inline">{{ currentLanguage.name }}</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <!-- Language Dropdown -->
+        <div
+            v-if="showLanguageDropdown"
+            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+            @click.stop
+        >
+          <button
+              v-for="language in languages"
+              :key="language.code"
+              @click="changeLanguage(language.code)"
+              class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+              :class="{ 'bg-indigo-50 text-indigo-600': locale === language.code }"
+          >
+            <span class="mr-3">{{ language.flag }}</span>
+            <span>{{ language.name }}</span>
+            <svg
+                v-if="locale === language.code"
+                class="ml-auto w-4 h-4 text-indigo-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       <div class="hidden md:flex space-x-4">
         <router-link
-          :class="loginButtonClasses"
-          class="px-5 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2"
-         to="login">
-          Login
+            :class="loginButtonClasses"
+            class="px-5 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2"
+            to="/login"
+        >
+          {{ t('navigation.login') }}
         </router-link>
       </div>
     </div>
+
+    <!-- Click outside to close dropdown -->
+    <div
+        v-if="showLanguageDropdown"
+        @click="showLanguageDropdown = false"
+        class="fixed inset-0 z-40"
+    ></div>
   </header>
 </template>

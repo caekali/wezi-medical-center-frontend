@@ -1,0 +1,138 @@
+{
+  "navigation": {
+    "home": "Home",
+    "departments": "Services",
+    "appointments": "Appointments",
+    "navigationMap": "Navigation Map",
+    "about": "About Us",
+    "login": "Login",
+    "language": "Language"
+  },
+  "home": {
+    "title": "LEAN ON US",
+    "subtitle": "We believe we are the shoulder for people to lean on, the friend and comfort in their time of need.",
+    "bookAppointment": "Book Appointment",
+    "explorServices": "Explore Our Services"
+  },
+  "departments": {
+    "title": "Services",
+    "subtitle": "We offer comprehensive healthcare services across multiple specialties, providing expert care with state-of-the-art technology and compassionate professionals.",
+    "keyServices": "Key Services",
+    "ctaTitle": "Need Medical Assistance?",
+    "ctaSubtitle": "Our medical professionals are ready to provide you with the best care possible. Book an appointment today.",
+    "emergency": "Emergency: 0996 817 322",
+    "departmentsList": {
+      "general": {
+        "name": "General Medicine",
+        "description": "Comprehensive primary healthcare services for patients of all ages.",
+        "services": [
+          "Annual Health Checkups",
+          "Preventive Care",
+          "Chronic Disease Management",
+          "Health Screenings",
+          "Vaccinations"
+        ]
+      },
+      "dental_care": {
+        "name": "Dental Care",
+        "description": "Keeping your teeth, gums and mouth healthy.",
+        "services": [
+          "Dental Consultation",
+          "Scale and Polish (Cleaning)",
+          "Extractions",
+          "Fillings"
+        ]
+      },
+      "radiology": {
+        "name": "Radiology",
+        "description": "Advanced medical imaging and diagnostic services.",
+        "services": [
+          "CT Scan",
+          "Digital X-Ray",
+          "High-end Ultrasonic",
+          "Special Radiology Examinations"
+        ]
+      },
+      "pediatrics": {
+        "name": "Pediatrics",
+        "description": "Specialized healthcare for infants, children, and adolescents.",
+        "services": [
+          "Well-Child Visits",
+          "Immunizations",
+          "Growth Monitoring",
+          "Developmental Assessments",
+          "Pediatric Urgent Care"
+        ]
+      },
+      "antenatal": {
+        "name": "Antenatal Care",
+        "description": "Comprehensive prenatal care and monitoring for expecting mothers and their babies throughout pregnancy.",
+        "services": [
+          "Prenatal Checkups",
+          "Ultrasound Scans",
+          "Pregnancy Monitoring",
+          "Nutritional Counseling",
+          "Birth Planning"
+        ]
+      },
+      "emergency": {
+        "name": "Emergency Care",
+        "description": "24/7 emergency medical services with rapid response capabilities.",
+        "services": [
+          "Trauma Care",
+          "Critical Care",
+          "Emergency Surgery",
+          "Rapid Diagnostics",
+          "Ambulance Services"
+        ]
+      }
+    }
+  },
+  "appointment": {
+    "title": "Book an Appointment",
+    "subtitle": "Schedule your visit with our medical professionals",
+    "patientInfo": "Patient Information",
+    "appointmentDetails": "Appointment Details",
+    "fullName": "Full Name",
+    "phoneNumber": "Phone Number",
+    "department": "Department",
+    "service": "Service",
+    "doctor": "Doctor",
+    "preferredDate": "Preferred Date",
+    "cancel": "Cancel",
+    "booking": "Booking...",
+    "bookAppointment": "Book Appointment",
+    "needHelp": "Need help booking? Call us at",
+    "contactSupport": "contact support",
+    "placeholders": {
+      "fullName": "Enter your full name",
+      "phoneNumber": "Phone number",
+      "selectDepartment": "Select a department",
+      "selectService": "Select a service",
+      "selectDoctor": "Select a doctor"
+    }
+  },
+  "helpdesk": {
+    "dashboard": {
+      "welcomeBack": "Welcome back",
+      "currentTime": "Current time",
+      "todayAppointments": "Today's Appointments",
+      "awaitingResponse": "Awaiting Response",
+      "walkInQueue": "Walk-in Queue",
+      "processedToday": "Processed Today",
+      "priorityActions": "Priority Actions",
+      "quickActions": "Quick Actions",
+      "performanceMetrics": "Today's Performance",
+      "recentAppointments": "Recent Appointments",
+      "avgResponseTime": "Avg Response Time",
+      "satisfactionRate": "Satisfaction Rate",
+      "tasksCompleted": "Tasks Completed",
+      "actions": {
+        "bookAppointment": "Book New Appointment",
+        "searchPatients": "Search Patients",
+        "registerWalkIn": "Register Walk-in",
+        "manageAppointments": "Manage Appointments"
+      }
+    }
+  }
+}

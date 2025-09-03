@@ -1,0 +1,138 @@
+
+{
+  "navigation": {
+    "home": "Accueil",
+    "departments": "Départements",
+    "appointments": "Rendez-vous",
+    "navigationMap": "Plan de Navigation",
+    "login": "Connexion",
+    "language": "Langue"
+  },
+  "home": {
+    "title": "COMPTEZ SUR NOUS",
+    "subtitle": "Nous croyons être l'épaule sur laquelle les gens peuvent s'appuyer, l'ami et le réconfort dans leurs moments de besoin.",
+    "bookAppointment": "Prendre Rendez-vous",
+    "explorServices": "Explorez Nos Services"
+  },
+  "departments": {
+    "title": "Départements",
+    "subtitle": "Nous offrons des services de santé complets dans de multiples spécialités, fournissant des soins experts avec une technologie de pointe et des professionnels compatissants.",
+    "keyServices": "Services Clés",
+    "ctaTitle": "Besoin d'Assistance Médicale?",
+    "ctaSubtitle": "Nos professionnels de la santé sont prêts à vous fournir les meilleurs soins possibles. Prenez rendez-vous aujourd'hui.",
+    "emergency": "Urgence: 0996 817 322",
+    "departmentsList": {
+      "general": {
+        "name": "Médecine Générale",
+        "description": "Services de soins de santé primaires complets pour les patients de tous âges.",
+        "services": [
+          "Bilans de Santé Annuels",
+          "Soins Préventifs",
+          "Gestion des Maladies Chroniques",
+          "Dépistages de Santé",
+          "Vaccinations"
+        ]
+      },
+      "dental_care": {
+        "name": "Soins Dentaires",
+        "description": "Garder vos dents, gencives et bouche en bonne santé.",
+        "services": [
+          "Consultation Dentaire",
+          "Détartrage et Polissage (Nettoyage)",
+          "Extractions",
+          "Plombages"
+        ]
+      },
+      "radiology": {
+        "name": "Radiologie",
+        "description": "Services d'imagerie médicale avancée et de diagnostic.",
+        "services": [
+          "Scanner CT",
+          "Radiographie Numérique",
+          "Échographie Haute Définition",
+          "Examens Radiologiques Spéciaux"
+        ]
+      },
+      "pediatrics": {
+        "name": "Pédiatrie",
+        "description": "Soins de santé spécialisés pour les nourrissons, enfants et adolescents.",
+        "services": [
+          "Visites de Bien-être pour Enfants",
+          "Immunisations",
+          "Surveillance de la Croissance",
+          "Évaluations du Développement",
+          "Soins Pédiatriques Urgents"
+        ]
+      },
+      "antenatal": {
+        "name": "Soins Prénataux",
+        "description": "Soins prénataux complets et surveillance pour les futures mères et leurs bébés tout au long de la grossesse.",
+        "services": [
+          "Consultations Prénatales",
+          "Échographies",
+          "Surveillance de Grossesse",
+          "Conseils Nutritionnels",
+          "Planification de Naissance"
+        ]
+      },
+      "emergency": {
+        "name": "Soins d'Urgence",
+        "description": "Services médicaux d'urgence 24h/24 avec capacités de réponse rapide.",
+        "services": [
+          "Soins de Traumatologie",
+          "Soins Intensifs",
+          "Chirurgie d'Urgence",
+          "Diagnostics Rapides",
+          "Services d'Ambulance"
+        ]
+      }
+    }
+  },
+  "appointment": {
+    "title": "Prendre un Rendez-vous",
+    "subtitle": "Planifiez votre visite avec nos professionnels de la santé",
+    "patientInfo": "Informations du Patient",
+    "appointmentDetails": "Détails du Rendez-vous",
+    "fullName": "Nom Complet",
+    "phoneNumber": "Numéro de Téléphone",
+    "department": "Département",
+    "service": "Service",
+    "doctor": "Docteur",
+    "preferredDate": "Date Préférée",
+    "cancel": "Annuler",
+    "booking": "Réservation...",
+    "bookAppointment": "Prendre Rendez-vous",
+    "needHelp": "Besoin d'aide pour réserver? Appelez-nous au",
+    "contactSupport": "contacter le support",
+    "placeholders": {
+      "fullName": "Entrez votre nom complet",
+      "phoneNumber": "Numéro de téléphone",
+      "selectDepartment": "Sélectionnez un département",
+      "selectService": "Sélectionnez un service",
+      "selectDoctor": "Sélectionnez un docteur"
+    }
+  },
+  "helpdesk": {
+    "dashboard": {
+      "welcomeBack": "Bon retour",
+      "currentTime": "Heure actuelle",
+      "todayAppointments": "Rendez-vous d'Aujourd'hui",
+      "awaitingResponse": "En Attente de Réponse",
+      "walkInQueue": "File d'Attente Sans Rendez-vous",
+      "processedToday": "Traités Aujourd'hui",
+      "priorityActions": "Actions Prioritaires",
+      "quickActions": "Actions Rapides",
+      "performanceMetrics": "Performance d'Aujourd'hui",
+      "recentAppointments": "Rendez-vous Récents",
+      "avgResponseTime": "Temps de Réponse Moyen",
+      "satisfactionRate": "Taux de Satisfaction",
+      "tasksCompleted": "Tâches Terminées",
+      "actions": {
+        "bookAppointment": "Nouveau Rendez-vous",
+        "searchPatients": "Rechercher Patients",
+        "registerWalkIn": "Enregistrer Sans Rendez-vous",
+        "manageAppointments": "Gérer Rendez-vous"
+      }
+    }
+  }
+}

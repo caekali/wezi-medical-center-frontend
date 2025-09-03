@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Layout from '../components/Layout.vue'
+import { useI18n } from 'vue-i18n'
 import Navigation from '@/components/Navigation.vue'
 
+const { t } = useI18n()
 const isPlaying = ref(true);
 const currentSlide = ref(0);
 const isSubmitting = ref(false);
@@ -156,7 +158,6 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Content Overlay -->
     <div class="relative z-10 flex flex-col h-screen">
       <!-- Header with transparent navigation -->
       <div class="absolute top-0 left-0 right-0 z-20">
@@ -166,32 +167,22 @@ onMounted(() => {
 
       <main class="flex-1 flex flex-col md:flex-row items-center max-md:text-center justify-center px-6 sm:px-10 md:px-24 max-w-7xl mx-auto w-full" role="main">
         <div class="flex flex-col items-center md:items-start text-white">
-<!--          <button class="mb-6 flex items-center space-x-2 border border-white/50 text-white text-xs rounded-full px-4 pr-1.5 py-1.5 hover:bg-white/10 transition backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white"-->
-<!--                  aria-label="Learn about our services">-->
-<!--            <span>Explore Our Services</span>-->
-<!--            <span class="flex items-center justify-center size-6 p-1 rounded-full bg-white/20" aria-hidden="true">-->
-<!--                <svg width="14" height="11" viewBox="0 0 16 13" fill="none">-->
-<!--                    <path d="M1 6.5h14M9.5 1 15 6.5 9.5 12" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />-->
-<!--                </svg>-->
-<!--            </span>-->
-<!--          </button>-->
-
           <h1 class="text-white mt-20 font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl leading-tight text-center md:text-left">
-            <span class="text-indigo-200">LEAN ON US</span>
+            <span class="text-indigo-200">{{ t('home.title') }}</span>
           </h1>
 
           <p class="mt-6 text-white/90 max-w-xl text-base sm:text-lg leading-relaxed text-center md:text-left">
-            We believe we are the shoulder for people to lean on, the friend and comfort in their time of need.
+            {{ t('home.subtitle') }}
           </p>
 
           <div class="flex flex-col md:flex-row items-center mt-8 gap-4">
             <router-link
                 to="/book-appointment"
                 class="z-50 bg-indigo-950 text-white px-8 pr-3 py-3 rounded-full text-sm font-medium flex items-center space-x-3 hover:bg-indigo-700 transition shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
-                aria-label="Book a medical appointment"
+                :aria-label="t('home.bookAppointment')"
                 role="button"
             >
-              Book Appointment
+              {{ t('home.bookAppointment') }}
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path d="M4.017 9.999h11.191m0 0-5.595-5.596m5.595 5.596-5.595 5.596" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
               </svg>

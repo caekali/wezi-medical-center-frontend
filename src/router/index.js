@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/departments',
     name: 'departments',
-    component: AdminDepartments
+    component: Departments
   },
   {
     path: '/dashboard/services',

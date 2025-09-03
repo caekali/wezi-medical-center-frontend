@@ -1,16 +1,19 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import Layout from '../components/Layout.vue'
 import BaseInput from '../components/BaseInput.vue'
 import BaseSelect from '../components/BaseSelect.vue'
-import Navigation from "@/components/Navigation.vue";
+import Navigation from "@/components/Navigation.vue"
 import { getDepartments } from '@/services/departmentService'
 import { getDoctorByDepartment } from '@/services/doctorService'
 import { getDepartmentServices } from '@/services/serviceService'
 import { createAppointment } from '@/services/appointmentService'
+import { getDoctorAvailableSlots } from '@/services/scheduleService'
 
 const router = useRouter()
+const { t } = useI18n()
 
 const appointmentForm = ref({
   phone_number: '',
@@ -18,11 +21,12 @@ const appointmentForm = ref({
   department_id: '',
   service_id: '',
   appointment_date: '',
-  appointment_time: '20:30',
+  appointment_time: '',
   doctor_id: ''
 })
 
 const isSubmitting = ref(false)
+const loadingTimeSlots = ref(false)
 const services = ref([])
 const departments = ref([])
 const doctors = ref([])
@@ -31,10 +35,7 @@ const errors = ref({})
 
 // Load initial data
 onMounted(async () => {
-  await Promise.all([
-    generateTimeSlots(),
-    fetchDepartments()
-  ])
+  await fetchDepartments()
 })
 
 const fetchDepartments = async () => {
@@ -48,13 +49,13 @@ const fetchDepartments = async () => {
 }
 
 const departmentOptions = computed(() =>
-  departments.value.map(dep => ({
-    value: dep.id,
-    label: dep.name
-  }))
+    departments.value.map(dep => ({
+      value: dep.id,
+      label: dep.name
+    }))
 )
 
-// load department
+// load services for selected department
 const loadServices = async (departmentId) => {
   services.value = []
   appointmentForm.value.service_id = ''
@@ -75,6 +76,9 @@ const loadServices = async (departmentId) => {
 const loadDoctors = async (departmentId) => {
   doctors.value = []
   appointmentForm.value.doctor_id = ''
+  appointmentForm.value.appointment_time = ''
+  availableTimeSlots.value = []
+
   if (!departmentId) return
 
   const { success, data, message } = await getDoctorByDepartment(departmentId)
@@ -88,53 +92,64 @@ const loadDoctors = async (departmentId) => {
   }
 }
 
-// Generate time slots
-const generateTimeSlots = () => {
-  const slots = []
-  const startHour = 9 // 9 AM
-  const endHour = 17 // 5 PM
-
-  for (let hour = startHour; hour < endHour; hour++) {
-    for (let minute = 0; minute < 60; minute += 30) {
-      const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-      const displayTime = new Date(`2000-01-01T${timeString}`).toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-      })
-
-      slots.push({
-        value: timeString,
-        label: displayTime
-      })
-    }
+// Load available time slots for selected doctor and date
+const loadAvailableTimeSlots = async () => {
+  if (!appointmentForm.value.doctor_id || !appointmentForm.value.appointment_date) {
+    availableTimeSlots.value = []
+    return
   }
 
-  availableTimeSlots.value = slots
+  loadingTimeSlots.value = true
+  appointmentForm.value.appointment_time = ''
+
+  try {
+    const { success, data, message } = await getDoctorAvailableSlots(
+        appointmentForm.value.doctor_id,
+        appointmentForm.value.appointment_date
+    )
+
+    if (success) {
+      availableTimeSlots.value = data.map(slot => ({
+        value: slot.time,
+        label: slot.displayTime,
+        available: slot.available
+      })).filter(slot => slot.available)
+    } else {
+      errors.value.timeSlots = message
+      availableTimeSlots.value = []
+    }
+  } catch (error) {
+    console.error('Error loading time slots:', error)
+    availableTimeSlots.value = []
+  } finally {
+    loadingTimeSlots.value = false
+  }
 }
+
+// Watch for changes in doctor or date to reload time slots
+watch(
+    () => [appointmentForm.value.doctor_id, appointmentForm.value.appointment_date],
+    () => {
+      loadAvailableTimeSlots()
+    }
+)
 
 const isValidPhone = computed(() => {
   const phone = appointmentForm.value.phone_number.trim()
-
-  // Allow +, spaces, parentheses, dashes
   const phoneRegex = /^\+?[0-9\s\-()]{8,20}$/
-
-  // Extract digits only
   const digits = phone.replace(/\D/g, '')
-
-  // Must be 8–15 digits (E.164 range)
   return phoneRegex.test(phone) && digits.length >= 8 && digits.length <= 15
 })
 
-
 const isFormValid = computed(() => {
   return appointmentForm.value.patient_name.trim() &&
-    appointmentForm.value.phone_number.trim() &&
-    appointmentForm.value.department_id &&
-    appointmentForm.value.service_id &&
-    appointmentForm.value.appointment_date &&
-    appointmentForm.value.appointment_time &&
-    isValidPhone.value
+      appointmentForm.value.phone_number.trim() &&
+      appointmentForm.value.department_id &&
+      appointmentForm.value.service_id &&
+      appointmentForm.value.appointment_date &&
+      appointmentForm.value.appointment_time &&
+      appointmentForm.value.doctor_id &&
+      isValidPhone.value
 })
 
 // Get minimum date (today)
@@ -160,7 +175,17 @@ const submitAppointment = async () => {
 
   if (result.success) {
     alert('Appointment booked successfully! We will contact you to confirm.')
-    // router.push('/')
+    // Reset form
+    appointmentForm.value = {
+      phone_number: '',
+      patient_name: '',
+      department_id: '',
+      service_id: '',
+      appointment_date: '',
+      appointment_time: '',
+      doctor_id: ''
+    }
+    availableTimeSlots.value = []
   } else {
     if (result.errors) {
       errors.value = result.errors
@@ -169,23 +194,13 @@ const submitAppointment = async () => {
     }
   }
 
-
-  appointmentForm.value = {
-    phone_number: '',
-    patient_name: '',
-    department_id: '',
-    service_id: '',
-    appointment_date: '',
-    appointment_time: '20:30',
-    doctor_id: ''
-  }
-
   isSubmitting.value = false
 }
 
 // Service options for select
 const serviceOptions = computed(() => services.value)
 const doctorOptions = computed(() => doctors.value)
+const timeSlotOptions = computed(() => availableTimeSlots.value)
 
 // When department changes, fetch services and doctors
 const onDepartmentChange = async (val) => {
@@ -194,6 +209,23 @@ const onDepartmentChange = async (val) => {
     loadServices(val),
     loadDoctors(val)
   ])
+}
+
+// When doctor changes, clear time slots and reload if date is selected
+const onDoctorChange = (val) => {
+  clearError('doctor_id')
+  appointmentForm.value.appointment_time = ''
+  if (appointmentForm.value.appointment_date) {
+    loadAvailableTimeSlots()
+  }
+}
+
+// When date changes, reload time slots if doctor is selected
+const onDateChange = () => {
+  clearError('appointment_date')
+  if (appointmentForm.value.doctor_id) {
+    loadAvailableTimeSlots()
+  }
 }
 </script>
 
@@ -204,10 +236,10 @@ const onDepartmentChange = async (val) => {
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
           <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">
-            Book an Appointment
+            {{ t('appointment.title') }}
           </h1>
           <p class="mt-4 text-lg text-gray-600">
-            Schedule your visit with our medical professionals
+            {{ t('appointment.subtitle') }}
           </p>
         </div>
 
@@ -218,7 +250,7 @@ const onDepartmentChange = async (val) => {
                 <div class="flex">
                   <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div class="ml-3">
                     <p class="text-sm text-red-800">{{ errors.general }}</p>
@@ -229,78 +261,133 @@ const onDepartmentChange = async (val) => {
 
             <form @submit.prevent="submitAppointment" class="space-y-6">
               <div class="border-b border-gray-200 pb-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Patient Information</h3>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">{{ t('appointment.patientInfo') }}</h3>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <BaseInput id="patient_name" label="Full Name" v-model="appointmentForm.patient_name"
-                    placeholder="Enter your full name" :error="errors.patient_name" :required="true" autocomplete="name"
-                    @focus="clearError('patient_name')" />
-                  <BaseInput id="phone_number" label="Phone Number" v-model="appointmentForm.phone_number" type="tel"
-                    placeholder="Phone number" :error="errors.phone_number" :required="true" autocomplete="tel"
-                    @focus="clearError('phone_number')" />
+                  <BaseInput
+                      id="patient_name"
+                      :label="t('appointment.fullName')"
+                      v-model="appointmentForm.patient_name"
+                      :placeholder="t('appointment.placeholders.fullName')"
+                      :error="errors.patient_name"
+                      :required="true"
+                      autocomplete="name"
+                      @focus="clearError('patient_name')"
+                  />
+                  <BaseInput
+                      id="phone_number"
+                      :label="t('appointment.phoneNumber')"
+                      v-model="appointmentForm.phone_number"
+                      type="tel"
+                      :placeholder="t('appointment.placeholders.phoneNumber')"
+                      :error="errors.phone_number"
+                      :required="true"
+                      autocomplete="tel"
+                      @focus="clearError('phone_number')"
+                  />
                 </div>
-
               </div>
 
-              <h3 class="text-lg font-medium text-gray-900 mb-4">Appointment Details</h3>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">{{ t('appointment.appointmentDetails') }}</h3>
               <div class="grid grid-cols-1 gap-6">
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <BaseSelect id="department_id" label="Department" v-model="appointmentForm.department_id"
-                    placeholder="Select a department" :options="departmentOptions" :error="errors.department_id"
-                    :required="true" @update:modelValue="onDepartmentChange" />
-                  <BaseSelect id="service_id" label="Service" v-model="appointmentForm.service_id"
-                    placeholder="Select a service" :options="serviceOptions" :error="errors.service_id" :required="true"
-                    @update:modelValue="clearError('service_id')" />
+                  <BaseSelect
+                      id="department_id"
+                      :label="t('appointment.department')"
+                      v-model="appointmentForm.department_id"
+                      :placeholder="t('appointment.placeholders.selectDepartment')"
+                      :options="departmentOptions"
+                      :error="errors.department_id"
+                      :required="true"
+                      @update:modelValue="onDepartmentChange"
+                  />
+                  <BaseSelect
+                      id="service_id"
+                      :label="t('appointment.service')"
+                      v-model="appointmentForm.service_id"
+                      :placeholder="t('appointment.placeholders.selectService')"
+                      :options="serviceOptions"
+                      :error="errors.service_id"
+                      :required="true"
+                      @update:modelValue="clearError('service_id')"
+                  />
                 </div>
-
 
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <BaseSelect id="doctor_id" label="Doctor" :required="true" v-model="appointmentForm.doctor_id"
-                    placeholder="Select a doctor" :options="doctorOptions" :error="errors.doctor_id"
-                    @update:modelValue="clearError('doctor_id')" />
-                  <BaseInput id="appointment_date" label="Preferred Date" v-model="appointmentForm.appointment_date"
-                    type="date" :min="minDate" :error="errors.appointment_date" :required="true"
-                    @focus="clearError('appointment_date')" />
-
+                  <BaseSelect
+                      id="doctor_id"
+                      :label="t('appointment.doctor')"
+                      :required="true"
+                      v-model="appointmentForm.doctor_id"
+                      :placeholder="t('appointment.placeholders.selectDoctor')"
+                      :options="doctorOptions"
+                      :error="errors.doctor_id"
+                      @update:modelValue="onDoctorChange"
+                  />
+                  <BaseInput
+                      id="appointment_date"
+                      :label="t('appointment.preferredDate')"
+                      v-model="appointmentForm.appointment_date"
+                      type="date"
+                      :min="minDate"
+                      :error="errors.appointment_date"
+                      :required="true"
+                      @change="onDateChange"
+                  />
                 </div>
-              </div>
 
-              <!-- <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
-                <div class="flex">
-                  <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <div class="ml-3">
-                    <h4 class="text-sm font-medium text-blue-800">Important Information</h4>
-                    <div class="mt-2 text-sm text-blue-700">
-                      <ul class="list-disc list-inside space-y-1">
-                        <li>Please arrive 15 minutes before your appointment</li>
-                        <li>Bring your insurance card and valid ID</li>
-                        <li>We will call to confirm your appointment within 24 hours</li>
-                        <li>For emergencies, call 911 or visit our emergency department</li>
-                      </ul>
+                <!-- Time Slot Selection -->
+                <div v-if="appointmentForm.doctor_id && appointmentForm.appointment_date">
+                  <BaseSelect
+                      id="appointment_time"
+                      label="Available Time Slots"
+                      v-model="appointmentForm.appointment_time"
+                      placeholder="Select an available time slot"
+                      :options="timeSlotOptions"
+                      :error="errors.appointment_time"
+                      :required="true"
+                      :loading="loadingTimeSlots"
+                      @update:modelValue="clearError('appointment_time')"
+                  />
+
+                  <!-- Show message if no slots available -->
+                  <div v-if="!loadingTimeSlots && availableTimeSlots.length === 0 && appointmentForm.doctor_id && appointmentForm.appointment_date"
+                       class="mt-2 text-sm text-amber-600 bg-amber-50 border border-amber-200 rounded-md p-3">
+                    <div class="flex">
+                      <svg class="h-4 w-4 text-amber-400 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                      </svg>
+                      No available time slots for the selected doctor and date. Please choose a different date.
                     </div>
                   </div>
+
+                  <!-- Loading indicator -->
+                  <div v-if="loadingTimeSlots" class="mt-2 text-sm text-gray-500 flex items-center">
+                    <svg class="animate-spin h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading available time slots...
+                  </div>
                 </div>
-              </div> -->
+              </div>
 
               <div class="flex justify-end space-x-3">
                 <button type="button" @click="router.push('/')"
-                  class="px-6 py-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
-                  Cancel
+                        class="px-6 py-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                  {{ t('appointment.cancel') }}
                 </button>
                 <button type="submit" :disabled="!isFormValid || isSubmitting"
-                  class="px-6 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                        class="px-6 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition">
                   <span v-if="isSubmitting" class="flex items-center">
                     <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                       <path class="opacity-75" fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                       </path>
                     </svg>
-                    Booking...
+                    {{ t('appointment.booking') }}
                   </span>
-                  <span v-else>Book Appointment</span>
+                  <span v-else>{{ t('appointment.bookAppointment') }}</span>
                 </button>
               </div>
             </form>
@@ -309,14 +396,11 @@ const onDepartmentChange = async (val) => {
 
         <div class="mt-8 text-center">
           <p class="text-sm text-gray-600">
-            Need help booking? Call us at
-            <a href="tel:+1234567890" class="text-indigo-600 hover:text-indigo-500 font-medium">
-              (111) 456-7890
+            {{ t('appointment.needHelp') }}
+            <a href="tel:+265880333980" class="text-indigo-600 hover:text-indigo-500 font-medium">
+              +265 880 33 39 80
             </a>
-            or
-            <router-link to="/contact" class="text-indigo-600 hover:text-indigo-500 font-medium">
-              contact support
-            </router-link>
+            {{ t('appointment.contactSupport') }}
           </p>
         </div>
       </div>

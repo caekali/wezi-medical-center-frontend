@@ -1,95 +1,62 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Layout from '../components/Layout.vue'
 import Navigation from '@/components/Navigation.vue'
 import pediatricsImage from '@/assets/images/Departments/pediatrics.jpg'
 import dentalImage from '@/assets/images/Departments/dental.jpg'
 import antenatalImage from '@/assets/images/Departments/antenatal.jpg'
 import generalImage from '@/assets/images/Departments/general.jpg'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 
-
-
-const departments = ref([
+const departments = computed(() => [
   {
     id: 'general',
-    name: 'General Medicine',
-    description: 'Comprehensive primary healthcare services for patients of all ages.',
+    name: t('departments.departmentsList.general.name'),
+    description: t('departments.departmentsList.general.description'),
     image: generalImage,
-    services: [
-      'Annual Health Checkups',
-      'Preventive Care',
-      'Chronic Disease Management',
-      'Health Screenings',
-      'Vaccinations'
-    ],
+    services: t('departments.departmentsList.general.services'),
     icon: '🏥'
   },
   {
     id: 'dental_care',
-    name: 'Dental Care',
-    description: 'Keeping your teeth, gums and mouth healthy.',
+    name: t('departments.departmentsList.dental_care.name'),
+    description: t('departments.departmentsList.dental_care.description'),
     image: dentalImage,
-    services: [
-      'Dental Consultation',
-      'Scale and Polish (Cleaning)',
-      'Extractions',
-      'Fillings',
-    ],
+    services: t('departments.departmentsList.dental_care.services'),
     icon: '🦷'
   },
   {
     id: 'radiology',
-    name: 'Radiology',
-    description: 'Advanced medical imaging and diagnostic services.',
+    name: t('departments.departmentsList.radiology.name'),
+    description: t('departments.departmentsList.radiology.description'),
     image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    services: [
-      'CT Scan',
-      'Digital X-Ray',
-      'High-end Ultrasonic',
-      'Special Radiology Examinations',
-    ],
+    services: t('departments.departmentsList.radiology.services'),
     icon: '🩻'
-  },{
+  },
+  {
     id: 'pediatrics',
-    name: 'Pediatrics',
-    description: 'Specialized healthcare for infants, children, and adolescents.',
+    name: t('departments.departmentsList.pediatrics.name'),
+    description: t('departments.departmentsList.pediatrics.description'),
     image: pediatricsImage,
-    services: [
-      'Well-Child Visits',
-      'Immunizations',
-      'Growth Monitoring',
-      'Developmental Assessments',
-      'Pediatric Urgent Care'
-    ],
+    services: t('departments.departmentsList.pediatrics.services'),
     icon: '👶'
   },
   {
     id: 'antenatal',
-    name: 'Antenatal Care',
-    description: 'Comprehensive prenatal care and monitoring for expecting mothers and their babies throughout pregnancy.',
+    name: t('departments.departmentsList.antenatal.name'),
+    description: t('departments.departmentsList.antenatal.description'),
     image: antenatalImage,
-    services: [
-      'Prenatal Checkups',
-      'Ultrasound Scans',
-      'Pregnancy Monitoring',
-      'Nutritional Counseling',
-      'Birth Planning'
-    ],
+    services: t('departments.departmentsList.antenatal.services'),
     icon: '🤰'
   },
   {
     id: 'emergency',
-    name: 'Emergency Care',
-    description: '24/7 emergency medical services with rapid response capabilities.',
+    name: t('departments.departmentsList.emergency.name'),
+    description: t('departments.departmentsList.emergency.description'),
     image: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    services: [
-      'Trauma Care',
-      'Critical Care',
-      'Emergency Surgery',
-      'Rapid Diagnostics',
-      'Ambulance Services'
-    ],
+    services: t('departments.departmentsList.emergency.services'),
     icon: '🚑'
   }
 ])
@@ -103,11 +70,10 @@ const departments = ref([
       <section class="bg-white py-16 lg:py-24">
         <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-24 text-center">
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            <span class="text-indigo-600">Departments</span>
+            <span class="text-indigo-600">{{ t('departments.title') }}</span>
           </h1>
           <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We offer comprehensive healthcare services across multiple specialties,
-            providing expert care with state-of-the-art technology and compassionate professionals.
+            {{ t('departments.subtitle') }}
           </p>
         </div>
       </section>
@@ -117,16 +83,16 @@ const departments = ref([
         <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-24">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div
-              v-for="department in departments"
-              :key="department.id"
-              class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                v-for="department in departments"
+                :key="department.id"
+                class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
             >
               <!-- Department Image -->
               <div class="relative h-48 overflow-hidden">
                 <img
-                  :src="department.image"
-                  :alt="`${department.name} department`"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    :src="department.image"
+                    :alt="`${department.name} department`"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 >
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute top-4 left-4">
@@ -144,25 +110,6 @@ const departments = ref([
                 <p class="text-gray-600 mb-4 leading-relaxed">
                   {{ department.description }}
                 </p>
-
-                <!-- Services List -->
-                <div class="mb-6">
-                  <h4 class="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-                    Key Services
-                  </h4>
-                  <ul class="space-y-2">
-                    <li
-                      v-for="service in department.services"
-                      :key="service"
-                      class="flex items-center text-sm text-gray-600"
-                    >
-                      <svg class="w-4 h-4 text-indigo-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg>
-                      {{ service }}
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
           </div>
@@ -173,24 +120,23 @@ const departments = ref([
       <section class="bg-indigo-600 py-16 lg:py-24">
         <div class="max-w-7xl mx-auto px-6 sm:px-10 md:px-24 text-center">
           <h2 class="text-3xl sm:text-4xl font-bold text-white mb-6">
-            Need Medical Assistance?
+            {{ t('departments.ctaTitle') }}
           </h2>
           <p class="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Our medical professionals are ready to provide you with the best care possible.
-            Book an appointment today.
+            {{ t('departments.ctaSubtitle') }}
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <router-link
-              to="/"
-              class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 transition-colors"
+                to="/book-appointment"
+                class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 transition-colors"
             >
-              Book Appointment
+              {{ t('home.bookAppointment') }}
             </router-link>
             <a
-              href="tel:+1234567890"
-              class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 transition-colors"
+                href="tel:+0996817322"
+                class="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600 transition-colors"
             >
-              Emergency: 0996 817 322
+              {{ t('departments.emergency') }}
             </a>
           </div>
         </div>
