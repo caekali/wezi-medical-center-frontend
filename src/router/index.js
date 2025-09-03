@@ -119,7 +119,7 @@ const routes = [
     path: '/helpdesk/dashboard',
     name: 'helpdesk-dashboard',
     component: HelpDeskDashboard,
-    meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'helpdesk' }
   }, {
     path: '/about',
     name: 'about',
@@ -135,10 +135,8 @@ const routes = [
     name: 'book-ambulance',
     component: BookAmbulance
   },
-    meta: { requiresAuth: true, role: 'helpdesk' }
-  }
-
-
+    // meta: { requiresAuth: true, role: 'helpdesk' }
+  // }
 
 ]
 
