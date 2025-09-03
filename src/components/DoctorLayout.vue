@@ -173,6 +173,7 @@ const navigationItems = [
   { name: 'Dashboard', href: '/doctor/dashboard', icon: DashboardIcon },
   { name: 'My Appointments', href: '/doctor/appointments', icon: AppointmentsIcon },
   { name: 'My Schedule', href: '/doctor/schedule', icon: ScheduleIcon },
+  { name: 'Profile', href: '/doctor/profile', },
 ]
 
 const handleLogout = () => {

@@ -31,19 +31,19 @@ const isActiveLink = (href, isRoute) => {
 const headerClasses = computed(() => {
   return props.isTransparent
     ? ''
-    : 'bg-white shadow-sm'
+    : 'bg-black/30 shadow-sm'
 })
 
 const logoClasses = computed(() => {
   return props.isTransparent
     ? 'text-white'
-    : 'text-gray-900'
+    : 'text-white'
 })
 
 const navLinkClasses = computed(() => {
   return props.isTransparent
     ? 'text-white hover:text-indigo-300'
-    : 'text-gray-700 hover:text-indigo-600'
+    : 'text-white hover:text-indigo-600'
 })
 
 const loginButtonClasses = computed(() => {

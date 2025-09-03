@@ -90,7 +90,8 @@
             </button>
           </div>
 
-          <div class="flex items-center space-x-4 h-8">
+          <div class="flex items-center space-x-4 w-6 h-8">
+
           </div>
         </div>
       </header>
@@ -142,12 +143,9 @@ const sidebarOpen = ref(false)
 const user = computed(() => authStore.user)
 
 const navigationItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: DashboardIcon },
-  { name: 'Appointments', href: '/dashboard/appointments', icon: AppointmentsIcon },
-  { name: 'Staff', href: '/dashboard/staff', icon: StaffIcon },
-  { name: 'Departments', href: '/dashboard/departments', icon: DepartmentsIcon },
-  { name: 'Services', href: '/dashboard/services', icon: DepartmentsIcon },
-  { name: 'Profile', href: '/helpdesk/profile',},
+  { name: 'Dashboard', href: '/helpdesk/dashboard', icon: DashboardIcon },
+  { name: 'Appointments', href: '/helpdesk/appointments', icon: AppointmentsIcon },
+  { name: 'Profile', href: '/helpdesk/profile', icon: StaffIcon},
   // { name: 'Settings', href: '/dashboard/settings', icon: SettingsIcon },
 ]
 

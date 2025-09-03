@@ -55,7 +55,7 @@
               </div>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600">Pending Appointments</p>
+              <p class="text-sm font-medium text-gray-600">Pending</p>
               <p class="text-2xl font-semibold text-gray-900">{{ todayStats.pending }}</p>
             </div>
           </div>
@@ -71,8 +71,8 @@
               </div>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-gray-600">Prescriptions Written</p>
-              <p class="text-2xl font-semibold text-gray-900">{{ todayStats.prescriptions }}</p>
+              <p class="text-sm font-medium text-gray-600">Completed</p>
+              <p class="text-2xl font-semibold text-gray-900">{{ todayStats.completed }}</p>
             </div>
           </div>
         </div>
@@ -150,52 +150,52 @@ const user = computed(() => authStore.user)
 
 // Data
 const todayStats = ref({
-  appointments: 8,
-  totalPatients: 156,
-  pending: 3,
-  prescriptions: 12
+  appointments: 0,
+  totalPatients: 0,
+  pending: 0,
+  prescriptions: 0
 })
 
 const todayAppointments = ref([
-  {
-    id: 1,
-    patient_name: 'John Smith',
-    service_name: 'General Consultation',
-    appointment_time: '2024-01-15T09:00:00',
-    status: 'confirmed'
-  },
-  {
-    id: 2,
-    patient_name: 'Sarah Johnson',
-    service_name: 'Follow-up',
-    appointment_time: '2024-01-15T10:30:00',
-    status: 'pending'
-  },
-  {
-    id: 3,
-    patient_name: 'Mike Brown',
-    service_name: 'Cardiology Check',
-    appointment_time: '2024-01-15T14:00:00',
-    status: 'confirmed'
-  }
+  // {
+  //   id: 1,
+  //   patient_name: 'John Smith',
+  //   service_name: 'General Consultation',
+  //   appointment_time: '2024-01-15T09:00:00',
+  //   status: 'confirmed'
+  // },
+  // {
+  //   id: 2,
+  //   patient_name: 'Sarah Johnson',
+  //   service_name: 'Follow-up',
+  //   appointment_time: '2024-01-15T10:30:00',
+  //   status: 'pending'
+  // },
+  // {
+  //   id: 3,
+  //   patient_name: 'Mike Brown',
+  //   service_name: 'Cardiology Check',
+  //   appointment_time: '2024-01-15T14:00:00',
+  //   status: 'confirmed'
+  // }
 ])
 
 const recentPatients = ref([
-  {
-    id: 1,
-    name: 'Emily Davis',
-    last_visit: '2024-01-14'
-  },
-  {
-    id: 2,
-    name: 'Robert Wilson',
-    last_visit: '2024-01-13'
-  },
-  {
-    id: 3,
-    name: 'Lisa Anderson',
-    last_visit: '2024-01-12'
-  }
+  // {
+  //   id: 1,
+  //   name: 'Emily Davis',
+  //   last_visit: '2024-01-14'
+  // },
+  // {
+  //   id: 2,
+  //   name: 'Robert Wilson',
+  //   last_visit: '2024-01-13'
+  // },
+  // {
+  //   id: 3,
+  //   name: 'Lisa Anderson',
+  //   last_visit: '2024-01-12'
+  // }
 ])
 
 // Methods

@@ -373,14 +373,14 @@ onMounted(async () => {
   appointments.value = [
     {
       id: 1,
-      patient: { name: 'John Doe' },
+      patient: { name: 'Patience Banda' },
       type: 'Consultation',
       datetime: new Date().toISOString(),
       status: 'scheduled'
     },
     {
       id: 2,
-      patient: { name: 'Jane Smith' },
+      patient: { name: 'Shalom Mbewe' },
       type: 'Follow-up',
       datetime: new Date(Date.now() + 86400000).toISOString(),
       status: 'scheduled'
