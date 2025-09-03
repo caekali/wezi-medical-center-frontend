@@ -7,7 +7,7 @@ import BookAmbulance from '@/views/BookAmbulance.vue'
 import Login from '../views/auth/Login.vue'
 import BookAppointment from '@/views/BookAppointment.vue'
 import Dashboard from "@/views/admin/Dashboard.vue";
-import Appointments from "@/views/admin/Appointments.vue";
+import Appointments from "@/views/helpdesk/Appointments.vue";
 import Staff from "@/views/admin/Staff.vue";
 import DashboardPatients from "@/views/DashboardPatients.vue";
 import DashboardSettings from "@/views/DashboardSettings.vue";
@@ -107,12 +107,12 @@ const routes = [
     path: '/helpdesk/profile',
     name: 'helpdesk-profile',
     component: HelpDeskProfile,
-    meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'helpdesk' }
   }, {
     path: '/helpdesk/appointments',
     name: 'helpdesk-appointments',
     component: HelpDeskAppointments,
-    meta: { requiresAuth: true, role: 'doctor' }
+    meta: { requiresAuth: true, role: 'helpdesk' }
   }
 
    , {
@@ -135,6 +135,11 @@ const routes = [
     name: 'book-ambulance',
     component: BookAmbulance
   },
+    meta: { requiresAuth: true, role: 'helpdesk' }
+  }
+
+
+
 ]
 
 const router = createRouter({
@@ -145,9 +150,8 @@ const router = createRouter({
 // helper: redirect by role
 const roleRedirects = {
   admin: '/dashboard',
-  doctor: '/doctor-dashboard',
-  staff: '/staff-dashboard',
-  patient: '/appointments',
+  doctor: '/doctor/dashboard',
+  helpdesk: '/helpdesk/dashboard',
 }
 
 router.beforeEach((to, from, next) => {
