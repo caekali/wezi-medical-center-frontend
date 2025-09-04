@@ -1,5 +1,5 @@
 <template>
-  <HelpDeskLayout page-title="Appointments Management">
+  <AuthenticatedLayout page-title="Appointments Management">
     <div class="space-y-6">
       <!-- Header with Actions -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -362,17 +362,15 @@
         </div>
       </div>
     </div>
-  </HelpDeskLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import AuthenticatedLayout from '@/components/AuthenticatedLayout.vue'
 import { useAuthStore } from '@/stores/auth.js'
-import HelpDeskLayout from "@/components/HelpDeskLayout.vue";
 
 const authStore = useAuthStore()
-
 
 // Data
 const appointments = ref([])

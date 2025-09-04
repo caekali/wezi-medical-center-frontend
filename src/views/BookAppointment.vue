@@ -6,6 +6,11 @@ import Layout from '../components/Layout.vue'
 import BaseInput from '../components/BaseInput.vue'
 import BaseSelect from '../components/BaseSelect.vue'
 import Navigation from "@/components/Navigation.vue"
+import { getDepartments } from '@/services/departmentService'
+import { getDoctorByDepartment } from '@/services/doctorService'
+import { getDepartmentServices } from '@/services/serviceService'
+import { createAppointment } from '@/services/appointmentService'
+import { getDoctorAvailableSlots } from '@/services/scheduleService'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -28,139 +33,18 @@ const doctors = ref([])
 const availableTimeSlots = ref([])
 const errors = ref({})
 
-// Dummy data
-const dummyDepartments = [
-  { id: 1, name: 'General Medicine' },
-  { id: 2, name: 'Dental Care' },
-  { id: 3, name: 'Radiology' },
-  { id: 4, name: 'Pediatrics' },
-  { id: 5, name: 'Antenatal Care' },
-  { id: 6, name: 'Emergency Care' }
-]
-
-const dummyServices = [
-  // General Medicine
-  { id: 1, name: 'General Consultation', price: 5000, department_id: 1 },
-  { id: 2, name: 'Health Checkup', price: 8000, department_id: 1 },
-  { id: 3, name: 'Blood Pressure Monitoring', price: 3000, department_id: 1 },
-  // Dental Care
-  { id: 4, name: 'Dental Consultation', price: 4000, department_id: 2 },
-  { id: 5, name: 'Teeth Cleaning', price: 7000, department_id: 2 },
-  { id: 6, name: 'Tooth Extraction', price: 10000, department_id: 2 },
-  { id: 7, name: 'Dental Filling', price: 12000, department_id: 2 },
-  // Radiology
-  { id: 8, name: 'X-Ray', price: 8000, department_id: 3 },
-  { id: 9, name: 'CT Scan', price: 25000, department_id: 3 },
-  { id: 10, name: 'Ultrasound', price: 15000, department_id: 3 },
-  // Pediatrics
-  { id: 11, name: 'Child Consultation', price: 6000, department_id: 4 },
-  { id: 12, name: 'Vaccination', price: 8000, department_id: 4 },
-  { id: 13, name: 'Growth Monitoring', price: 4000, department_id: 4 },
-  // Antenatal Care
-  { id: 14, name: 'Prenatal Checkup', price: 8000, department_id: 5 },
-  { id: 15, name: 'Ultrasound Scan', price: 12000, department_id: 5 },
-  { id: 16, name: 'Blood Tests', price: 6000, department_id: 5 },
-  // Emergency Care
-  { id: 17, name: 'Emergency Consultation', price: 10000, department_id: 6 },
-  { id: 18, name: 'Trauma Care', price: 20000, department_id: 6 },
-  { id: 19, name: 'Critical Care', price: 30000, department_id: 6 }
-]
-
-const dummyDoctors = [
-  {
-    id: 1,
-    name: 'Sarah Johnson',
-    specialization: 'General Medicine',
-    department_id: 1,
-    schedule: {
-      monday: { startTime: '09:00', endTime: '17:00', slotDuration: 30 },
-      tuesday: { startTime: '09:00', endTime: '17:00', slotDuration: 30 },
-      wednesday: { startTime: '09:00', endTime: '17:00', slotDuration: 30 },
-      thursday: { startTime: '09:00', endTime: '17:00', slotDuration: 30 },
-      friday: { startTime: '09:00', endTime: '17:00', slotDuration: 30 }
-    }
-  },
-  {
-    id: 2,
-    name: 'Michael Chen',
-    specialization: 'Dental Surgeon',
-    department_id: 2,
-    schedule: {
-      monday: { startTime: '08:00', endTime: '16:00', slotDuration: 45 },
-      tuesday: { startTime: '08:00', endTime: '16:00', slotDuration: 45 },
-      wednesday: { startTime: '08:00', endTime: '16:00', slotDuration: 45 },
-      thursday: { startTime: '08:00', endTime: '16:00', slotDuration: 45 },
-      friday: { startTime: '08:00', endTime: '16:00', slotDuration: 45 }
-    }
-  },
-  {
-    id: 3,
-    name: 'Emily Rodriguez',
-    specialization: 'Radiologist',
-    department_id: 3,
-    schedule: {
-      monday: { startTime: '07:00', endTime: '15:00', slotDuration: 30 },
-      tuesday: { startTime: '07:00', endTime: '15:00', slotDuration: 30 },
-      wednesday: { startTime: '07:00', endTime: '15:00', slotDuration: 30 },
-      thursday: { startTime: '07:00', endTime: '15:00', slotDuration: 30 },
-      friday: { startTime: '07:00', endTime: '15:00', slotDuration: 30 }
-    }
-  },
-  {
-    id: 4,
-    name: 'David Thompson',
-    specialization: 'Pediatrician',
-    department_id: 4,
-    schedule: {
-      monday: { startTime: '10:00', endTime: '18:00', slotDuration: 30 },
-      tuesday: { startTime: '10:00', endTime: '18:00', slotDuration: 30 },
-      wednesday: { startTime: '10:00', endTime: '18:00', slotDuration: 30 },
-      thursday: { startTime: '10:00', endTime: '18:00', slotDuration: 30 },
-      friday: { startTime: '10:00', endTime: '18:00', slotDuration: 30 }
-    }
-  },
-  {
-    id: 5,
-    name: 'Lisa Williams',
-    specialization: 'Obstetrician',
-    department_id: 5,
-    schedule: {
-      monday: { startTime: '09:00', endTime: '17:00', slotDuration: 45 },
-      tuesday: { startTime: '09:00', endTime: '17:00', slotDuration: 45 },
-      wednesday: { startTime: '09:00', endTime: '17:00', slotDuration: 45 },
-      thursday: { startTime: '09:00', endTime: '17:00', slotDuration: 45 },
-      friday: { startTime: '09:00', endTime: '17:00', slotDuration: 45 }
-    }
-  },
-  {
-    id: 6,
-    name: 'Robert Martinez',
-    specialization: 'Emergency Medicine',
-    department_id: 6,
-    schedule: {
-      monday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 },
-      tuesday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 },
-      wednesday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 },
-      thursday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 },
-      friday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 },
-      saturday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 },
-      sunday: { startTime: '00:00', endTime: '23:59', slotDuration: 30 }
-    }
-  }
-]
-
 // Load initial data
 onMounted(async () => {
   await fetchDepartments()
 })
 
 const fetchDepartments = async () => {
-  try {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500))
-    departments.value = dummyDepartments
-  } catch (error) {
-    errors.value.general = 'Failed to load departments'
+  const { success, data, message } = await getDepartments()
+
+  if (success) {
+    departments.value = data
+  } else {
+    errors.value = message
   }
 }
 
@@ -171,27 +55,24 @@ const departmentOptions = computed(() =>
     }))
 )
 
-// Load services for selected department (dummy data)
+// load services for selected department
 const loadServices = async (departmentId) => {
   services.value = []
   appointmentForm.value.service_id = ''
   if (!departmentId) return
 
-  try {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 300))
-
-    const departmentServices = dummyServices.filter(service => service.department_id == departmentId)
-    services.value = departmentServices.map(service => ({
+  const { success, data, message } = await getDepartmentServices(departmentId)
+  if (success) {
+    services.value = data.map(service => ({
       value: service.id,
-      label: `${service.name} - MWK ${service.price.toLocaleString()}`
+      label: `${service.name} - MWK ${service.price}`
     }))
-  } catch (error) {
-    errors.value.services = 'Failed to load services'
+  } else {
+    errors.value = message
   }
 }
 
-// Load dummy doctors for selected department
+// fetch doctors from department
 const loadDoctors = async (departmentId) => {
   doctors.value = []
   appointmentForm.value.doctor_id = ''
@@ -200,69 +81,15 @@ const loadDoctors = async (departmentId) => {
 
   if (!departmentId) return
 
-  try {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 300))
-
-    // Filter dummy doctors by department
-    const departmentDoctors = dummyDoctors.filter(doctor => doctor.department_id == departmentId)
-
-    doctors.value = departmentDoctors.map(doctor => ({
+  const { success, data, message } = await getDoctorByDepartment(departmentId)
+  if (success) {
+    doctors.value = data.map(doctor => ({
       value: doctor.id,
-      label: `Dr. ${doctor.name} - ${doctor.specialization}`
+      label: `Dr. ${doctor.name} - ${doctor.specialization || 'General'}`
     }))
-  } catch (error) {
-    errors.value.doctors = 'Failed to load doctors'
+  } else {
+    errors.value = message
   }
-}
-
-// Generate time slots based on doctor's schedule
-const generateTimeSlots = (doctorId, date) => {
-  const doctor = dummyDoctors.find(d => d.id == doctorId)
-  if (!doctor) return []
-
-  const selectedDate = new Date(date)
-  const dayName = selectedDate.toLocaleDateString('en-US', { weekday: 'lowercase' })
-
-  const daySchedule = doctor.schedule[dayName]
-  if (!daySchedule) return []
-
-  const slots = []
-  const [startHour, startMinute] = daySchedule.startTime.split(':').map(Number)
-  const [endHour, endMinute] = daySchedule.endTime.split(':').map(Number)
-  const slotDuration = daySchedule.slotDuration
-
-  let currentTime = startHour * 60 + startMinute // Convert to minutes
-  const endTime = endHour * 60 + endMinute
-
-  while (currentTime < endTime) {
-    const hours = Math.floor(currentTime / 60)
-    const minutes = currentTime % 60
-
-    const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
-    const displayTime = formatTime(timeString)
-
-    // Always available for demo
-    const isAvailable = true
-
-    slots.push({
-      time: timeString,
-      displayTime: displayTime,
-      available: isAvailable
-    })
-    console.log(slots)
-    currentTime += slotDuration
-  }
-
-  return slots
-}
-
-const formatTime = (time) => {
-  const [hours, minutes] = time.split(':')
-  const hour = parseInt(hours)
-  const ampm = hour >= 12 ? 'PM' : 'AM'
-  const displayHour = hour % 12 || 12
-  return `${displayHour}:${minutes} ${ampm}`
 }
 
 // Load available time slots for selected doctor and date
@@ -276,18 +103,21 @@ const loadAvailableTimeSlots = async () => {
   appointmentForm.value.appointment_time = ''
 
   try {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800))
+    const { success, data, message } = await getDoctorAvailableSlots(
+        appointmentForm.value.doctor_id,
+        appointmentForm.value.appointment_date
+    )
 
-    const allSlots = generateTimeSlots(appointmentForm.value.doctor_id, appointmentForm.value.appointment_date)
-
-    availableTimeSlots.value = allSlots
-        .filter(slot => slot.available)
-        .map(slot => ({
-          value: slot.time,
-          label: slot.displayTime
-        }))
-
+    if (success) {
+      availableTimeSlots.value = data.map(slot => ({
+        value: slot.time,
+        label: slot.displayTime,
+        available: slot.available
+      })).filter(slot => slot.available)
+    } else {
+      errors.value.timeSlots = message
+      availableTimeSlots.value = []
+    }
   } catch (error) {
     console.error('Error loading time slots:', error)
     availableTimeSlots.value = []
@@ -334,48 +164,37 @@ const clearError = (field) => {
   }
 }
 
-// Submit appointment (dummy implementation)
+// Submit appointment
 const submitAppointment = async () => {
   if (!isFormValid.value) return
 
   isSubmitting.value = true
   errors.value = {}
 
-  try {
-    // Simulate API delay and processing
-    await new Promise(resolve => setTimeout(resolve, 2000))
+  const result = await createAppointment(appointmentForm.value)
 
-    // Simulate random success/failure for testing
-    const isSuccess = Math.random() > 0.1 // 90% success rate
-
-    if (isSuccess) {
-      alert('Appointment booked successfully! We will contact you to confirm.')
-
-      // Reset form
-      appointmentForm.value = {
-        phone_number: '',
-        patient_name: '',
-        department_id: '',
-        service_id: '',
-        appointment_date: '',
-        appointment_time: '',
-        doctor_id: ''
-      }
-      availableTimeSlots.value = []
-      services.value = []
-      doctors.value = []
-    } else {
-      // Simulate validation errors
-      errors.value = {
-        general: 'Failed to book appointment. Please try again.',
-        appointment_time: 'Selected time slot is no longer available'
-      }
+  if (result.success) {
+    alert('Appointment booked successfully! We will contact you to confirm.')
+    // Reset form
+    appointmentForm.value = {
+      phone_number: '',
+      patient_name: '',
+      department_id: '',
+      service_id: '',
+      appointment_date: '',
+      appointment_time: '',
+      doctor_id: ''
     }
-  } catch (error) {
-    errors.value.general = 'Network error. Please check your connection and try again.'
-  } finally {
-    isSubmitting.value = false
+    availableTimeSlots.value = []
+  } else {
+    if (result.errors) {
+      errors.value = result.errors
+    } else {
+      errors.value.general = result.message
+    }
   }
+
+  isSubmitting.value = false
 }
 
 // Service options for select
