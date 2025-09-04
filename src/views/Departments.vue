@@ -8,6 +8,7 @@ import antenatalImage from '@/assets/images/Departments/antenatal.jpg'
 import generalImage from '@/assets/images/Departments/general.jpg'
 import heroImage from '@/assets/images/services.jpg'
 import { useI18n } from 'vue-i18n'
+import Footer from "@/components/Footer.vue";
 
 const { t } = useI18n()
 
@@ -148,5 +149,6 @@ const departments = computed(() => [
           </div>
         </div>
       </section>
+    <Footer/>
   </Layout>
 </template>

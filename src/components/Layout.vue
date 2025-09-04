@@ -29,8 +29,6 @@ defineProps({
       <slot />
     </main>
 
-    <!-- Footer (if needed) -->
-    <slot name="footer" />
   </div>
 </template>
 

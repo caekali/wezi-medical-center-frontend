@@ -10,6 +10,7 @@ import { getDepartments } from '@/services/departmentService'
 import { getDoctorAvailabilities, getDoctorByDepartment } from '@/services/doctorService'
 import { getDepartmentServices } from '@/services/serviceService'
 import { createAppointment } from '@/services/appointmentService'
+import Footer from "@/components/Footer.vue";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -573,5 +574,6 @@ const onDateChange = () => {
         </div>
       </div>
     </div>
+    <Footer/>
   </Layout>
 </template>

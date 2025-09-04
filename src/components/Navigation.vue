@@ -1,10 +1,10 @@
 <script setup>
-import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import {computed, ref} from 'vue'
+import {useRoute} from 'vue-router'
+import {useI18n} from 'vue-i18n'
 
 const route = useRoute()
-const { t, locale } = useI18n()
+const {t, locale} = useI18n()
 const showLanguageDropdown = ref(false)
 const showAppointmentDropdown = ref(false)
 
@@ -16,8 +16,8 @@ const props = defineProps({
 })
 
 const navigationItems = computed(() => [
-  { name: t('navigation.home'), href: '/', id: 'home', isRoute: true },
-  { name: t('navigation.departments'), href: '/departments', id: 'departments', isRoute: true },
+  {name: t('navigation.home'), href: '/', id: 'home', isRoute: true},
+  {name: t('navigation.departments'), href: '/departments', id: 'departments', isRoute: true},
   {
     name: t('navigation.appointments'),
     href: '/book-appointment',
@@ -25,17 +25,17 @@ const navigationItems = computed(() => [
     isRoute: true,
     hasDropdown: true,
     dropdownItems: [
-      { name: t('navigation.bookAppointment'), href: '/book-appointment', id: 'book-appointment' },
-      { name: t('navigation.bookAmbulance'), href: '/book-ambulance', id: 'book-ambulance' }
+      {name: t('navigation.bookAppointment'), href: '/book-appointment', id: 'book-appointment'},
+      {name: t('navigation.bookAmbulance'), href: '/book-ambulance', id: 'book-ambulance'}
     ]
   },
-  { name: t('navigation.map'), href: '/map', id: 'map', isRoute: true },
-  { name: t('navigation.about'), href: '/about', id: 'about', isRoute: true },
+  {name: t('navigation.map'), href: '/map', id: 'map', isRoute: true},
+  {name: t('navigation.about'), href: '/about', id: 'about', isRoute: true},
 ])
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ny', name: 'Chichewa', flag: '🇲🇼' }
+  {code: 'en', name: 'English', flag: '🇺🇸'},
+  {code: 'ny', name: 'Chichewa', flag: '🇲🇼'}
 ]
 
 const currentLanguage = computed(() =>
@@ -90,7 +90,7 @@ const loginButtonClasses = computed(() => {
 <template>
   <header
       :class="headerClasses"
-      class="flex items-center justify-between h-16  px-6 md:px-16 lg:px-24 xl:px-32 py-6 w-full transition-colors duration-300"
+      class="flex items-center z-50 justify-between h-16  px-6 md:px-16 lg:px-24 xl:px-32 py-6 w-full transition-colors duration-300"
       role="banner"
   >
     <router-link
@@ -127,15 +127,15 @@ const loginButtonClasses = computed(() => {
         <!-- Dropdown navigation items -->
         <div
             v-else-if="item.hasDropdown"
-            class="relative"
-            @mouseenter="showAppointmentDropdown = true"
-            @mouseleave="showAppointmentDropdown = false"
+            class="relative "
+            @click.stop
         >
           <button
+              @click="showAppointmentDropdown = !showAppointmentDropdown"
               :class="[
-              navLinkClasses,
-              isActiveDropdown(item.dropdownItems) ? 'border text-indigo-50 font-semibold' : ''
-            ]"
+                navLinkClasses,
+                isActiveDropdown(item.dropdownItems) ? 'border text-indigo-50 font-semibold' : ''
+              ]"
               class="flex items-center space-x-1 transition focus:outline-none focus:ring-2 rounded px-2 py-1"
           >
             <span>{{ item.name }}</span>
@@ -144,21 +144,24 @@ const loginButtonClasses = computed(() => {
             </svg>
           </button>
 
-          <!-- Dropdown Menu -->
-          <div
-              v-if="showAppointmentDropdown"
-              class="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200"
-          >
-            <router-link
-                v-for="dropdownItem in item.dropdownItems"
-                :key="dropdownItem.id"
-                :to="dropdownItem.href"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition"
-                :class="{ 'bg-indigo-50 text-indigo-600': route.path === dropdownItem.href }"
+          <!-- Dropdown Menu with no gap -->
+            <div
+                v-if="showAppointmentDropdown"
+                class="absolute top-full right-0 pt-1 w-48 z-50"
             >
-              {{ dropdownItem.name }}
-            </router-link>
-          </div>
+              <div class="bg-white rounded-md shadow-lg py-1 border border-gray-200">
+                <router-link
+                    v-for="dropdownItem in item.dropdownItems"
+                    :key="dropdownItem.id"
+                    :to="dropdownItem.href"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition"
+                    :class="{ 'bg-indigo-50 text-indigo-600': route.path === dropdownItem.href }"
+                    @click="showAppointmentDropdown = false"
+                >
+                  {{ dropdownItem.name }}
+                </router-link>
+              </div>
+            </div>
         </div>
 
         <!-- Non-route items -->

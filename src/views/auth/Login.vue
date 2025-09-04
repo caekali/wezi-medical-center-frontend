@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Layout from '../../components/Layout.vue'
 import { useAuthStore } from '@/stores/auth'
+import logoImage from '@/assets/logo.png'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -98,7 +99,7 @@ const togglePasswordVisibility = () =>
         <div class="text-center">
           <router-link to="/" class="inline-flex items-center">
             <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center mr-3">
-              <img src="../assets/logo.png" alt="">
+              <img :src="logoImage" alt="">
             </div>
           </router-link>
 

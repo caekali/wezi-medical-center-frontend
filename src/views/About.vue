@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import Layout from '../components/Layout.vue'
 import Navigation from '../components/Navigation.vue'
 import heroImage from '@/assets/images/about1.jpg'
+import Footer from "@/components/Footer.vue";
 
 const { t } = useI18n()
 const router = useRouter()
@@ -164,5 +165,7 @@ const navigateToBooking = () => {
         </button>
       </div>
     </section>
+
+    <Footer/>
   </Layout>
 </template>

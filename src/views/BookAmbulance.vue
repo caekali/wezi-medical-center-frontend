@@ -6,6 +6,7 @@ import Layout from '../components/Layout.vue'
 import BaseInput from '../components/BaseInput.vue'
 import BaseSelect from '../components/BaseSelect.vue'
 import Navigation from '../components/Navigation.vue'
+import Footer from "@/components/Footer.vue";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -258,5 +259,6 @@ const submitAmbulanceRequest = async () => {
         </div>
       </div>
     </div>
+    <Footer/>
   </Layout>
 </template>

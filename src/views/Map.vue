@@ -3,7 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Layout from '../components/Layout.vue'
 import Navigation from '../components/Navigation.vue'
-import heroImage from '@/assets/images/about.jpg'
+import heroImage from '@/assets/images/map.jpg'
+import Footer from "@/components/Footer.vue";
 
 const { t } = useI18n()
 
@@ -269,5 +270,6 @@ onMounted(() => {
         </div>
       </div>
     </section>
+    <Footer/>
   </Layout>
 </template>
