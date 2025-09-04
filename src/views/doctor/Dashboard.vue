@@ -29,7 +29,7 @@
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-sm border">
+        <!-- <div class="bg-white p-6 rounded-lg shadow-sm border">
           <div class="flex items-center">
             <div class="flex-shrink-0">
               <div class="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
@@ -43,7 +43,7 @@
               <p class="text-2xl font-semibold text-gray-900">{{ todayStats.totalPatients }}</p>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="bg-white p-6 rounded-lg shadow-sm border">
           <div class="flex items-center">

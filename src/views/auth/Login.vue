@@ -11,9 +11,8 @@ const authStore = useAuthStore()
 const redirectByRole = (role) => {
   const routes = {
     admin: '/dashboard',
-    doctor: '/doctor-dashboard',
-    staff: '/staff-dashboard',
-    'help desk': '/staff-dashboard', // fixed typo
+    doctor: '/doctor/dashboard',
+    'help desk': '/staff/dashboard', 
   }
   router.replace(routes[role] || '/')
 }

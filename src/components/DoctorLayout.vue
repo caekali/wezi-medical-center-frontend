@@ -97,7 +97,7 @@
     <!-- Main content -->
     <div class="flex flex-col flex-1 overflow-hidden">
       <!-- Top bar -->
-      <header class="bg-white shadow-sm border-b">
+      <header class="bg-white shadow-sm border-b h-16">
         <div class="flex items-center justify-between px-4 py-4">
           <div class="flex items-center">
             <button

@@ -90,7 +90,7 @@ const loginButtonClasses = computed(() => {
 <template>
   <header
       :class="headerClasses"
-      class="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-6 w-full transition-colors duration-300"
+      class="flex items-center justify-between h-16  px-6 md:px-16 lg:px-24 xl:px-32 py-6 w-full transition-colors duration-300"
       role="banner"
   >
     <router-link
